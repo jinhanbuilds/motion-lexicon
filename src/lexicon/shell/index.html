@@ -1,0 +1,1548 @@
+<title>动效词典</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@200;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&display=swap">
+<style>
+:root{
+  --bg:#F5F5F2; --surface:#FFFFFF; --surface-2:#EEEDE9; --sunk:#ECEBE6;
+  --ink:#17171A; --ink-2:#3D3C38; --muted:#6C6A63; --faint:#9A978F;
+  --line:#DEDBD4; --line-2:#C4C0B7;
+  --accent:#2E4BFF; --accent-ink:#2440E0; --accent-soft:rgba(46,75,255,.09); --btn:#2E4BFF; --on-btn:#FFFFFF;
+  --L1:#55524C; --L2:#A2690F; --L3:#2E4BFF; --L4:#15815A; --L5:#C03A2B;
+  --stage-edge:#D2CEC5; --scrim:rgba(14,14,18,.55); --toast-bg:#17171A; --toast-ink:#F5F5F2;
+  --serif:"Newsreader","Noto Serif SC","Noto Serif CJK SC","Songti SC","STSong",Georgia,serif;
+  --sans:"Hanken Grotesk","PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"Noto Sans CJK SC",monospace;
+  --nav-h:52px; --fbar-h:96px; --gut:max(16px,3.2vw); --max:1360px; --safe-top:env(safe-area-inset-top,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111215; --surface:#18191D; --surface-2:#202126; --sunk:#0C0D10;
+    --ink:#ECEAE4; --ink-2:#CFCCC5; --muted:#9A978F; --faint:#6F6D67;
+    --line:#2A2B31; --line-2:#3E3F46;
+    --accent:#7C8FFF; --accent-ink:#98A6FF; --accent-soft:rgba(124,143,255,.14); --btn:#2E4BFF; --on-btn:#FFFFFF;
+    --L1:#B3AFA7; --L2:#E3A64A; --L3:#7C90FF; --L4:#45BF8D; --L5:#EE6A56;
+    --stage-edge:#3A3B42; --scrim:rgba(0,0,0,.62); --toast-bg:#ECEAE4; --toast-ink:#111215;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111215; --surface:#18191D; --surface-2:#202126; --sunk:#0C0D10;
+  --ink:#ECEAE4; --ink-2:#CFCCC5; --muted:#9A978F; --faint:#6F6D67;
+  --line:#2A2B31; --line-2:#3E3F46;
+  --accent:#7C8FFF; --accent-ink:#98A6FF; --accent-soft:rgba(124,143,255,.14); --btn:#2E4BFF; --on-btn:#FFFFFF;
+  --L1:#B3AFA7; --L2:#E3A64A; --L3:#7C90FF; --L4:#45BF8D; --L5:#EE6A56;
+  --stage-edge:#3A3B42; --scrim:rgba(0,0,0,.62); --toast-bg:#ECEAE4; --toast-ink:#111215;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html.modal-open{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--accent-ink);text-underline-offset:3px}
+button,select{font:inherit;color:inherit}
+code,.mono{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+[tabindex="-1"]:focus{outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--btn);color:#fff;padding:8px 14px;border-radius:4px;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{max-width:calc(var(--max) + 2 * var(--gut));margin:0 auto;padding:0 var(--gut)}
+section[id],header[id]{scroll-margin-top:calc(var(--nav-h) + var(--safe-top) + 8px)}
+
+/* layer code */
+.lc{display:inline-flex;align-items:center;justify-content:center;font:600 10px/1 var(--mono);font-style:normal;letter-spacing:.02em;color:var(--lc,var(--muted));padding:3px 4px 3px;border-radius:2px;background:color-mix(in srgb,var(--lc,var(--muted)) 13%,transparent);flex:none}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 14px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font:600 13px/1 var(--sans);border-radius:4px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{border-color:var(--ink-2)}
+.btn.sm{height:30px;padding:0 11px;font-size:12.5px}
+.btn.primary{background:var(--btn);border-color:var(--btn);color:var(--on-btn)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.wide{width:100%;height:42px;font-size:14px}
+.btn[aria-pressed="true"].add{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary[aria-pressed="true"]{background:var(--surface);color:var(--accent-ink);border-color:var(--accent)}
+.icon-btn{display:inline-grid;place-items:center;width:30px;height:30px;border:1px solid transparent;background:transparent;border-radius:4px;color:var(--muted);cursor:pointer;flex:none;font:500 16px/1 var(--sans)}
+.icon-btn:hover{background:var(--surface-2);color:var(--ink)}
+.kchip{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:2px 10px 2px 4px;border:1px solid var(--line);background:var(--surface);border-radius:3px;font:500 13px/1.3 var(--sans);color:var(--ink);cursor:pointer;text-align:left}
+.kchip:hover{border-color:var(--lc);}
+.kchip.dead{padding-left:10px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.wchip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 9px;border:1px solid var(--line);background:transparent;border-radius:999px;font:500 12px/1 var(--sans);color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.wchip:hover{border-color:var(--ink-2);color:var(--ink)}
+.adv{display:inline-flex;align-items:center;height:18px;padding:0 6px;border:1px solid var(--accent);color:var(--accent-ink);border-radius:2px;font:600 10.5px/1 var(--sans);letter-spacing:.04em}
+.seg{display:inline-flex;position:relative;border:1px solid var(--line-2);border-radius:4px;padding:2px;gap:2px;background:var(--surface);max-width:100%}
+.seg button{border:0;background:transparent;height:28px;padding:0 10px;border-radius:3px;font:500 12.5px/1 var(--sans);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-width:0}
+.seg button i{font:600 10.5px/1 var(--mono);font-style:normal;opacity:.75}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button[aria-pressed="true"] i{opacity:1}
+.flash{animation:flash 1.8s ease-out}
+@keyframes flash{0%,35%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 3px transparent}}
+
+/* nav = journey rail */
+.nav{position:sticky;top:var(--safe-top);z-index:40;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{height:var(--nav-h);display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none;font:600 16px/1 var(--serif);white-space:nowrap;flex:none}
+.brand small{font:500 10.5px/1 var(--mono);color:var(--muted);letter-spacing:.08em}
+.rail{list-style:none;margin:0 0 0 auto;padding:0;display:flex;align-items:center;min-width:0}
+.rail li{display:flex;align-items:center;white-space:nowrap}
+.rail li+li::before{content:"";width:20px;height:1px;background:var(--line-2);margin:0 6px;flex:none}
+.rail li>a{display:inline-flex;align-items:center;gap:7px;padding:7px 8px;border-radius:4px;font:500 13px/1 var(--sans);color:var(--ink-2);text-decoration:none}
+.rail li>a:hover{background:var(--surface-2);color:var(--ink)}
+.rail li>a i{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--line-2);font:600 10.5px/1 var(--mono);font-style:normal;color:var(--muted);flex:none;transition:background-color .25s,border-color .25s,color .25s}
+.rail li.on>a{color:var(--ink);font-weight:600}
+.rail li.on>a i{background:var(--btn);border-color:var(--btn);color:#fff}
+.rail b{font:600 11px/1 var(--mono);color:var(--on-btn);background:var(--btn);border-radius:999px;padding:3px 6px}
+.rail b:empty{display:none}
+.rail .sub{display:inline-flex;margin-left:2px;padding-left:6px;border-left:1px solid var(--line)}
+.rail .sub a{padding:7px 6px;border-radius:4px;font:500 12.5px/1 var(--sans);color:var(--muted);text-decoration:none}
+.rail .sub a:hover{color:var(--ink);background:var(--surface-2)}
+.rail .sub a.on{color:var(--ink);font-weight:600}
+.nav-help{font:500 13px/1 var(--sans);color:var(--muted);text-decoration:none;padding:7px 8px;border-radius:4px;white-space:nowrap;flex:none}
+.nav-help:hover,.nav-help.on{color:var(--ink);background:var(--surface-2)}
+.theme-btn{height:30px;padding:0 10px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--muted);font:500 12px/1 var(--sans);cursor:pointer;white-space:nowrap;flex:none}
+.theme-btn:hover{color:var(--ink);border-color:var(--line-2)}
+
+/* hero: four-panel flow stage (fixed specimen colours; does not follow page theme) */
+.hero{padding-top:26px;padding-bottom:8px}
+.hero-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 40px;flex-wrap:wrap;margin-bottom:18px}
+.kicker{font:500 11px/1.4 var(--mono);letter-spacing:.1em;color:var(--muted);margin:0 0 8px;text-transform:uppercase}
+.kicker b{color:var(--accent-ink);font-weight:600}
+h1{font:400 clamp(40px,4.2vw,60px)/1 var(--serif);letter-spacing:-.02em;margin:0}
+.hero-line{margin:0;font:400 clamp(20px,2.1vw,30px)/1.25 var(--serif);color:var(--ink);text-align:right}
+.hero-line span{display:block;margin-top:8px;font:500 12px/1 var(--mono);color:var(--muted);letter-spacing:.04em}
+.mini-h{font:600 11.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:0 0 12px}
+.fs{--L1:#55524C;--L2:#A2690F;--L3:#2E4BFF;--L4:#15815A;--L5:#C03A2B;background:#0B0B0D;border-radius:6px;padding:12px;box-shadow:0 0 0 1px var(--stage-edge);color:#17171A;max-width:max(640px,calc((100dvh - 300px) * 4 + 60px));margin:0 auto}
+.fs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,2fr);gap:10px}
+.fs-p{display:flex;flex-direction:column;min-width:0;background:#E9E6DF;border-radius:3px;padding:10px 12px}
+.fs-p h2{display:flex;align-items:center;gap:8px;margin:0 0 10px;min-height:28px}
+.fs-p h2>button{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;padding:0;cursor:pointer;font:600 13px/1 var(--sans);color:#77756F;white-space:nowrap}
+.fs-p h2>button i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid #C9C4BA;font:600 11px/1 var(--mono);font-style:normal;color:#77756F;transition:background-color .3s,border-color .3s,color .3s}
+.fs-p.on h2>button,.fs-p.done h2>button{color:#17171A}
+.fs-p.on h2>button i{background:#2E4BFF;border-color:#2E4BFF;color:#fff}
+.fs-p.done h2>button i{border-color:#17171A;color:#17171A}
+.fs-b{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.fs-c{margin:10px 0 0;font:500 11.5px/1.4 var(--sans);color:#77756F}
+#fsWords{align-items:flex-start;gap:10px}
+.fw{display:inline-flex;align-items:center;gap:7px;max-width:100%;min-height:34px;padding:4px 12px 4px 6px;border:1px solid #C9C4BA;border-radius:3px;background:#F4F2EE;font:500 14px/1.3 var(--sans);color:#17171A;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1),border-color .25s,background-color .25s,color .25s}
+.fw.in{opacity:1;transform:none}
+.fw.live{border-color:#2E4BFF;background:#DCE2FF;color:#2440E0}
+.fs-pr{margin:0;font:11.5px/1.85 var(--mono);color:#3A3A40;white-space:normal;overflow:hidden}
+.fl{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .3s}
+.fl.in{opacity:1}
+.fl.tg{color:#2440E0;font-weight:600}
+.fl.ph{color:#77756F}
+.fs-bd{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;align-content:center}
+.ff{opacity:0;transform:scale(.96);transition:opacity .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.ff.in{opacity:1;transform:none}
+.fr{position:relative;aspect-ratio:16/10;border:1px solid #77756F;border-radius:2px;overflow:hidden}
+.fr::before{content:"";position:absolute}
+.fr.f0::before{left:14%;top:44%;width:46%;height:12%;background:#17171A}
+.fr.f1::before{left:50%;top:50%;width:34%;aspect-ratio:1;border:1px solid #17171A;border-radius:50%;transform:translate(-50%,-50%)}
+.fr.f2::before{left:14%;right:14%;top:32%;height:1px;background:#17171A;box-shadow:0 7px 0 #C9C4BA,0 14px 0 #C9C4BA}
+.fr.f3::before{right:16%;bottom:22%;width:22%;aspect-ratio:1;background:#2E4BFF}
+.fr i{position:absolute;right:4px;top:4px;width:13px;height:13px;border-radius:50%;background:#1F9D6B;opacity:0;transform:scale(.4);transition:opacity .2s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+.fr i::after{content:"";position:absolute;left:4.5px;top:2.5px;width:3px;height:6px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+.ff.ok .fr i{opacity:1;transform:none}
+.ff>span{display:block;margin-top:3px;font:500 10.5px/1.2 var(--mono);color:#77756F}
+.fs-film h2{justify-content:space-between;flex-wrap:wrap}
+.fs-filmbox{flex:1;display:flex;align-items:center}
+.fs-film .demo{width:100%;box-shadow:none;border-radius:2px;background:#0B0B0D}
+.fs-ab{display:inline-flex;border:1px solid #C9C4BA;border-radius:4px;padding:2px;gap:2px;background:#F4F2EE}
+.fs-ab button{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 8px;border:0;border-radius:3px;background:transparent;font:500 11.5px/1 var(--sans);color:#77756F;cursor:pointer;white-space:nowrap}
+.fs-ab button em{font:600 10.5px/1 var(--mono);font-style:normal}
+.fs-ab button[aria-pressed="true"]{background:#17171A;color:#F4F2EE}
+.fs-line{display:flex;align-items:center;gap:12px;padding:10px 2px 0}
+.fs-pp{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.32);background:transparent;color:#ECE9E2;font:500 9px/1 var(--mono);cursor:pointer;padding:0;flex:none}
+.fs-pp:hover{border-color:#ECE9E2}
+.fs-track{position:relative;flex:1;height:12px}
+.fs-track::before{content:"";position:absolute;left:0;right:0;top:5.5px;height:1px;background:rgba(255,255,255,.22)}
+.fs-track i{position:absolute;left:0;right:0;top:5px;height:2px;background:#ECE9E2;transform:scaleX(0);transform-origin:left}
+.fs-track b{position:absolute;top:2px;width:1px;height:8px;background:rgba(255,255,255,.4)}
+.fs-foot{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;padding:14px 0 0}
+.fs-lab{font:600 13px var(--sans);color:var(--ink-2)}
+.fs-note{font-size:12.5px;color:var(--muted);margin-right:auto}
+.fs-next{font:600 14px var(--sans);color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px;white-space:nowrap}
+.fs-next:hover{color:var(--accent-ink);border-color:var(--accent-ink)}
+
+/* brand landing (first screen) */
+.lh{display:flex;flex-direction:column;min-height:calc(100vh - var(--nav-h) - 1px);min-height:calc(100dvh - var(--nav-h) - var(--safe-top) - 1px);padding-top:28px;padding-bottom:0}
+.lh-body{flex:1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center;padding-bottom:28px}
+.lh h1{font:400 clamp(64px,8.4vw,124px)/.95 var(--serif);white-space:nowrap;margin:18px 0 0}
+.lh-say{font:400 clamp(24px,2.5vw,36px)/1.25 var(--serif);margin:26px 0 0}
+.lh-sub{font-size:16.5px;line-height:1.7;color:var(--ink-2);max-width:27em;margin:16px 0 28px}
+.lh-sub span{display:block;margin-top:10px;font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--muted)}
+.lh-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.btn.lg{height:46px;padding:0 22px;font-size:15px}
+.lh-r{display:flex;flex-direction:column;gap:12px;min-width:0}
+.lh-frame{background:#0B0B0D;border-radius:6px;padding:12px;box-shadow:0 0 0 1px var(--stage-edge)}
+.lh-frame .demo{box-shadow:none;border-radius:2px;background:#0B0B0D}
+.lh-now{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:32px}
+.lh-now b{font:600 10.5px/1 var(--mono);letter-spacing:.08em;color:var(--accent-ink)}
+.lh-now span{display:inline-flex;align-items:center;height:30px;padding:0 11px;border:1px solid var(--line-2);border-radius:3px;background:var(--surface);font:500 13px/1 var(--sans);color:var(--ink-2);transition:border-color .25s,background-color .25s,color .25s}
+.lh-now span.live{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+.lh-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink)}
+.lh-steps a{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 10px;align-items:baseline;padding:14px 16px 20px 0;color:var(--ink);text-decoration:none}
+.lh-steps i{font:600 11px/1 var(--mono);font-style:normal;color:var(--faint)}
+.lh-steps b{font:600 15px/1.3 var(--sans)}
+.lh-steps small{grid-column:2;font-size:12.5px;color:var(--muted)}
+.lh-steps a:hover b{color:var(--accent-ink)}
+.flowsec{padding-top:56px;padding-bottom:8px;scroll-margin-top:calc(var(--nav-h) + var(--safe-top) + 8px)}
+
+/* three parallel paths */
+.paths{padding:56px 0 8px}
+.paths-h{display:flex;align-items:baseline;gap:8px 18px;flex-wrap:wrap;border-top:1px solid var(--ink);padding-top:18px;margin-bottom:22px}
+.paths-h h2{font:400 clamp(28px,3.2vw,40px)/1.1 var(--serif);margin:0}
+.paths-h p{margin:0;color:var(--muted);font-size:14.5px}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.pcard{display:flex;flex-direction:column;gap:4px;padding:8px 8px 16px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);text-decoration:none;min-width:0}
+.pcard:hover{border-color:var(--accent)}
+.pthumb{aspect-ratio:16/10;background:#0B0B0D;border-radius:3px;overflow:hidden;pointer-events:none;display:grid;align-items:center;margin-bottom:10px;box-shadow:0 0 0 1px var(--stage-edge)}
+.pthumb>.scene-box,.pthumb>.demo{width:100%;box-shadow:none;border-radius:0}
+.pthumb .scene-pp,.pthumb .scene-big{display:none !important}
+.pcard .pk{font:600 11.5px/1.4 var(--mono);letter-spacing:.08em;color:var(--accent-ink);padding:0 8px}
+.pcard b{font:400 26px/1.2 var(--serif);padding:0 8px}
+.pcard .pd{font-size:14.5px;color:var(--ink-2);padding:0 8px}
+.pcard .pf{font-size:12.5px;color:var(--muted);padding:0 8px;margin-top:2px}
+.pjoin{display:block;text-align:center;text-decoration:none;color:var(--ink)}
+.pjoin svg{display:block;width:100%;height:34px;color:var(--line-2)}
+.pjoin span{display:inline-flex;align-items:center;height:36px;padding:0 16px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);font:600 13.5px/1 var(--sans)}
+.pjoin:hover span{border-color:var(--accent);color:var(--accent-ink)}
+
+/* section heads */
+.sec{padding:72px 0 24px}
+.sec-h{display:grid;grid-template-columns:80px minmax(0,1fr);gap:0 24px;border-top:1px solid var(--ink);padding-top:18px;margin-bottom:36px}
+.sec-no{font:500 13px/1 var(--mono);color:var(--muted);padding-top:12px}
+.sec-h h2{font:400 clamp(32px,4vw,48px)/1.1 var(--serif);letter-spacing:-.01em;margin:0}
+.sec-h h2 em{font-style:italic;font-weight:300;color:var(--muted);font-size:.6em;margin-left:10px;letter-spacing:0}
+.sec-h p{margin:12px 0 0;color:var(--ink-2);max-width:46em;font-size:15.5px}
+
+/* stages */
+.demo{position:relative;aspect-ratio:16/10;background:#E9E6DF;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px var(--stage-edge)}
+.demo-ph{position:absolute;inset:0;display:grid;place-items:center;font:500 11px var(--mono);color:#9C988F;letter-spacing:.04em}
+.lx-missing{position:absolute;inset:0;display:grid;place-items:center;font:500 12px var(--mono);color:#77756F;background:#E9E6DF}
+.scene-box{position:relative;aspect-ratio:16/9;background:#0B0B0D;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px var(--stage-edge)}
+
+/* anatomy */
+.anat{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:start}
+.anat-stick{position:sticky;top:calc(var(--safe-top) + var(--nav-h) + 16px);display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - var(--nav-h) - 32px);max-height:calc(100dvh - var(--nav-h) - var(--safe-top) - 32px)}
+.anat-stick>*{flex:none}
+.anat-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.anat-label{font:500 12px/1.3 var(--mono);color:var(--ink-2)}
+.anat-label b{color:var(--accent-ink);font-weight:600}
+.pips{display:flex;gap:3px}
+.pips button{width:26px;height:24px;border:1px solid var(--line);background:var(--surface);border-radius:3px;font:500 11px/1 var(--mono);color:var(--muted);cursor:pointer;padding:0}
+.pips button[aria-current="step"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.params{display:flex;flex-wrap:wrap;gap:4px;margin:0}
+.pv{display:flex;gap:6px;align-items:baseline;padding:3px 7px;border:1px solid var(--line);border-radius:3px;background:var(--surface);font:500 11.5px/1.3 var(--sans)}
+.pv dt{color:var(--faint)} .pv dd{margin:0;color:var(--ink)}
+.pv.off dd{color:var(--faint)}
+.pv.ch{border-color:var(--accent);background:var(--accent-soft)} .pv.ch dd{color:var(--accent-ink)}
+.anat-stick>.pp{display:flex;flex-direction:column;min-height:140px;flex:1 1 auto;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);overflow:hidden}
+.pp-h{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 12px;border-bottom:1px solid var(--line);font:600 12px/1 var(--sans);color:var(--ink-2)}
+.pp-h .mono{font-weight:500;font-size:11px;color:var(--faint);margin-right:auto}
+.pp-b{overflow:auto;padding:8px 0;flex:1 1 auto;scroll-behavior:auto}
+.pp-l{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:5px 12px;font:12.5px/1.55 var(--mono);color:var(--ink-2);overflow-wrap:anywhere}
+.pp-l .lc{justify-self:start;margin-top:2px}
+.pp-l.base{font-family:var(--sans);font-size:14px;color:var(--ink)}
+.pp-l.fresh{animation:fresh 2.4s ease-out}
+@keyframes fresh{0%,35%{background:var(--accent-soft);color:var(--ink)}100%{background:transparent}}
+.anat-steps{list-style:none;margin:0;padding:0}
+.step{min-height:62vh;padding:26px 0 40px 22px;border-left:1px solid var(--line);position:relative;transition:opacity .3s}
+.step:last-child{min-height:78vh}
+.step::before{content:"";position:absolute;left:-1px;top:26px;width:2px;height:40px;background:transparent;transition:background .3s}
+.step.on::before{background:var(--accent)}
+.step:not(.on){opacity:.66}
+.step-no{font:500 11.5px/1 var(--mono);letter-spacing:.08em;color:var(--muted);margin:0 0 10px}
+.step h3{font:400 30px/1.2 var(--serif);margin:0 0 10px}
+.step-note{color:var(--ink-2);margin:0 0 14px;max-width:34em}
+.step-prompt{margin:0 0 14px;padding:14px 16px;border-left:3px solid var(--ink);background:var(--surface);font:500 16px/1.6 var(--sans)}
+.step-lines{list-style:none;margin:12px 0 0;padding:0;display:none}
+.step-lines li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:6px;font:12px/1.55 var(--mono);color:var(--ink-2);padding:3px 0;overflow-wrap:anywhere}
+.step-diff{font:500 12px/1.5 var(--sans);color:var(--faint);margin:14px 0 0}
+.anat-end{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+.anat-end p{width:100%;margin:0 0 4px;color:var(--ink-2)}
+
+/* recipes */
+.rgroup{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;font:400 28px/1.2 var(--serif);margin:48px 0 18px}
+.rgroup:first-child{margin-top:0}
+.rgroup span{font:500 12px var(--mono);color:var(--faint)}
+.rgroup small{font:400 13.5px var(--sans);color:var(--muted)}
+.recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,400px),1fr));gap:20px}
+.recipe{display:flex;flex-direction:column;gap:12px;padding:18px 18px 16px;border:1px solid var(--line);background:var(--surface);border-radius:6px;min-width:0;scroll-margin-top:calc(var(--safe-top) + var(--nav-h) + 12px)}
+.recipe header{display:flex;gap:12px;align-items:baseline}
+.recipe .no{font:500 12px var(--mono);color:var(--faint)}
+.recipe h4{font:400 23px/1.25 var(--serif);margin:0}
+.recipe .intent{margin:0;color:var(--ink-2);font-size:14px}
+.r-rows{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.r-row{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:start}
+.r-row>.lc{margin-top:7px}
+.r-row .kchip{min-height:26px;font-size:12.5px;padding:2px 8px}
+.r-row .kchip .lc{display:none}
+.recipe footer{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.recipe footer .mono{font-size:11.5px;color:var(--faint);margin-right:auto}
+.r-stage{display:flex;flex-direction:column;gap:0;margin:-8px -8px 0}
+.r-stage .ctrls{padding:10px 2px 0}
+.r-stage .abbar.run i{animation-duration:10s}
+.r-now{display:flex;gap:8px;align-items:baseline;margin:8px 2px 0;height:36px;overflow:hidden;font:500 12.5px/1.45 var(--sans);color:var(--ink-2)}
+.r-now b{flex:none;font:600 10.5px/1.9 var(--mono);letter-spacing:.06em;color:var(--accent-ink)}
+.r-now.a b{color:var(--muted)}
+.r-now span{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.r-row .kchip{transition:border-color .25s,background-color .25s,color .25s}
+.r-row .kchip.live{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+
+/* library */
+.fbar{position:sticky;top:calc(var(--safe-top) + var(--nav-h));z-index:30;background:var(--bg);margin:0 calc(-1 * var(--gut));padding:0 var(--gut);border-bottom:1px solid var(--line-2)}
+.ltabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.ltabs::-webkit-scrollbar{display:none}
+.ltabs button{display:flex;align-items:baseline;gap:8px;padding:12px 18px 11px 0;margin-right:10px;border:0;background:transparent;cursor:pointer;color:var(--muted);position:relative;font:500 15px/1 var(--sans);white-space:nowrap;flex:none}
+.ltabs button .c{font:600 12px/1 var(--mono);color:var(--lc,var(--ink-2))}
+.ltabs button em{font:italic 300 13px var(--serif);color:var(--faint)}
+.ltabs button .n{font:500 11px var(--mono);color:var(--faint)}
+.ltabs button::after{content:"";position:absolute;left:0;right:18px;bottom:0;height:2px;background:transparent}
+.ltabs button[aria-pressed="true"]{color:var(--ink)}
+.ltabs button[aria-pressed="true"]::after{background:var(--lc,var(--ink))}
+.tools{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;padding:8px 0 10px;border-top:1px solid var(--line)}
+.search{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);flex:1 1 260px;max-width:400px;min-width:0}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search svg{flex:none;color:var(--faint)}
+.search input{border:0;background:transparent;outline:0;font:14px var(--sans);color:var(--ink);width:100%;min-width:0;height:100%}
+.selw{position:relative;display:inline-flex;align-items:center;flex:0 1 auto;min-width:0}
+.selw select{height:36px;max-width:100%;padding:0 30px 0 12px;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);color:var(--ink-2);font:500 13px var(--sans);cursor:pointer;appearance:none;-webkit-appearance:none;text-overflow:ellipsis}
+.selw::after{content:"▾";position:absolute;right:11px;pointer-events:none;font-size:11px;color:var(--muted)}
+.selw.on select{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+.tbtn{height:36px;padding:0 12px;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);cursor:pointer;font:500 13px var(--sans);color:var(--ink-2);display:inline-flex;align-items:center;gap:6px;flex:none}
+.tbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+.count{font:500 12px var(--mono);color:var(--muted);margin-left:auto}
+.tagbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:0 0 10px}
+.tagbar .lbl{font:600 11px/1 var(--mono);letter-spacing:.08em;color:var(--faint);margin-right:6px;flex:none}
+.tag{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 9px;border:1px solid var(--line);background:transparent;border-radius:999px;font:500 12px/1 var(--sans);color:var(--ink-2);cursor:pointer;white-space:nowrap;flex:none}
+.tag:hover{border-color:var(--ink-2);color:var(--ink)}
+.tag span{font:500 10.5px/1 var(--mono);color:var(--faint)}
+.tag[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.tag[aria-pressed="true"] span{color:var(--bg);opacity:.7}
+.tag.more{border-style:dashed;color:var(--muted)}
+#libOut{overflow-anchor:none}
+.ldesc{display:grid;grid-template-columns:80px minmax(0,1fr);gap:0 24px;padding:24px 0 0}
+.ldesc .c{font:500 40px/1 var(--serif);color:var(--lc)}
+.ldesc h3{font:400 24px/1.2 var(--serif);margin:0}
+.ldesc h3 em{font-style:italic;font-weight:300;color:var(--muted);font-size:.7em;margin-left:8px}
+.ldesc .t{font-weight:600;font-size:13.5px;color:var(--ink-2);margin:6px 0 2px}
+.ldesc p{margin:0;color:var(--ink-2);max-width:52em}
+.setbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:start;margin:24px 0 0;padding:16px 18px;border:1px solid var(--line-2);border-left:3px solid var(--accent);border-radius:4px;background:var(--surface)}
+.setbar .k{font:600 11px/1 var(--mono);letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+.setbar h3{font:400 24px/1.25 var(--serif);margin:0}
+.setbar p{margin:8px 0 0;color:var(--ink-2);max-width:52em}
+.setbar .en{font:13px/1.65 var(--mono);color:var(--ink);overflow-wrap:anywhere}
+.setbar .acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.lib-lh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:52px 0 0;padding-top:16px;border-top:1px solid var(--ink)}
+.lib-lh .lc{font-size:12px;padding:4px 6px}
+.lib-lh .zh{font:400 30px/1.1 var(--serif)}
+.lib-lh em{font:italic 300 18px var(--serif);color:var(--muted)}
+.lib-lh .tl{font:400 13.5px var(--sans);color:var(--muted)}
+.lib-lh .n{font:500 12px var(--mono);color:var(--faint);margin-left:auto}
+.lib-g{margin-top:26px}
+.lib-gh{display:flex;align-items:baseline;gap:10px;font:600 13px/1 var(--sans);color:var(--ink-2);margin:0 0 12px;letter-spacing:.02em}
+.lib-gh::after{content:"";flex:1;height:1px;background:var(--line);transform:translateY(-4px)}
+.lib-gh .n{font:500 11px var(--mono);color:var(--faint)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:20px}
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px;min-width:0;scroll-margin-top:calc(var(--safe-top) + var(--nav-h) + var(--fbar-h) + 12px)}
+.card:hover{border-color:var(--line-2)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:10px 4px 2px}
+.ctrls .seg{flex:1 1 auto}
+.ctrls .seg button{flex:1 1 0;justify-content:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.abbar{position:absolute;left:3px;right:3px;bottom:-1px;height:2px;overflow:hidden;pointer-events:none}
+.abbar i{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.abbar.run i{animation:abfill 3.6s linear forwards}
+@keyframes abfill{to{transform:scaleX(1)}}
+.demo:hover + .ctrls .abbar i{animation-play-state:paused}
+.sl{display:flex;align-items:center;gap:8px;font:500 12px var(--sans);color:var(--ink-2);flex:1 1 200px;min-width:0}
+.sl span{white-space:nowrap}
+.sl input{flex:1;min-width:60px;accent-color:var(--accent)}
+.sl output{font:500 11.5px var(--mono);color:var(--ink);min-width:36px;text-align:right}
+.card-b{display:flex;flex-direction:column;gap:8px;padding:12px 6px 6px;flex:1}
+.meta{display:flex;align-items:center;gap:8px;margin:0;font-size:12px;color:var(--muted);min-width:0}
+.meta code{margin-left:auto;font-size:10.5px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kname{margin:0;font:600 18px/1.35 var(--sans)}
+.name{border:0;background:transparent;padding:0;text-align:left;cursor:pointer;font:inherit;color:var(--ink)}
+.name:hover{color:var(--accent-ink)}
+.en{display:flex;gap:6px;align-items:flex-start}
+.en-t{margin:0;flex:1;font:12.5px/1.55 var(--mono);color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.when-t{margin:0;font-size:12px;line-height:1.5;color:var(--muted)}
+.acts{display:flex;gap:6px;margin-top:auto;padding-top:6px}
+.empty{padding:60px 0;text-align:left;color:var(--muted)}
+.libnext{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:44px;padding-top:18px;border-top:1px solid var(--ink)}
+.libnext .mono{font-size:12px;color:var(--muted)}
+.libnext div{display:flex;gap:8px;flex-wrap:wrap}
+.libnext .btn{height:40px;font-size:14px}
+
+/* detail */
+dialog.detail{padding:0;border:1px solid var(--line-2);background:var(--bg);color:var(--ink);width:min(1260px,calc(100% - 32px));max-width:none;max-height:calc(100% - 32px);border-radius:8px;box-shadow:0 30px 90px rgba(0,0,0,.35);overflow:auto;overscroll-behavior:contain}
+dialog.detail::backdrop{background:var(--scrim)}
+.d-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:12px;padding:10px 12px 10px 20px;background:var(--bg);border-bottom:1px solid var(--line)}
+.crumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);min-width:0;flex-wrap:wrap}
+.crumb .ly{display:inline-flex;gap:6px;align-items:center;color:var(--ink-2);font-weight:500}
+.crumb code{font-size:11px;color:var(--faint)}
+.d-tools{display:flex;align-items:center;gap:2px;margin-left:auto}
+.d-pos{font-size:11px;color:var(--faint);margin-right:6px;white-space:nowrap}
+.d-grid{display:grid;grid-template-columns:minmax(0,760px) minmax(300px,1fr);grid-template-areas:"left head" "left right";grid-template-rows:auto 1fr;gap:0 32px;padding:24px 24px 8px}
+.d-head{grid-area:head}.d-left{grid-area:left}.d-right{grid-area:right}
+.d-left .demo{border-radius:4px}
+.d-left .ctrls{padding:12px 0 0}
+.d-see{font-size:13px;color:var(--muted);margin:14px 0 0;line-height:1.6}
+.d-see b{font:600 11px var(--mono);letter-spacing:.06em;color:var(--ink-2);margin-right:8px}
+.d-head h2{font:400 34px/1.2 var(--serif);margin:0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.d-what{font-size:16px;color:var(--ink-2);margin:10px 0 18px}
+.phr{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:10px 12px 12px;margin-bottom:10px}
+.phr-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.phr-h h3,.d-h{font:600 11px/1 var(--mono);letter-spacing:.08em;color:var(--muted);margin:0;text-transform:uppercase}
+.d-h{margin:18px 0 8px}
+.phr-t{margin:0;font-size:14.5px;line-height:1.65}
+.phr-t.en{font:13px/1.65 var(--mono);color:var(--ink);overflow-wrap:anywhere}
+.d-when{margin:0;color:var(--ink-2);font-size:13.5px}
+.d-avoid{margin:0;padding-left:12px;border-left:2px solid var(--L5);color:var(--ink-2)}
+.d-src{display:flex;flex-wrap:wrap;gap:6px 14px;font:500 12px var(--mono)}
+.d-src span{color:var(--muted)}
+.d-right .btn.wide{margin-top:22px}
+.d-foot{display:flex;justify-content:space-between;gap:10px;padding:16px 24px 22px;border-top:1px solid var(--line);margin-top:18px}
+.d-foot .btn{max-width:48%;overflow:hidden;text-overflow:ellipsis}
+
+/* composer */
+.comp{display:grid;grid-template-columns:minmax(0,1fr) 420px;grid-template-areas:"s1 side" "s2 side" "s3 side";gap:0 32px;align-items:start}
+.cstep{border-top:1px solid var(--line-2);padding:18px 0 30px;min-width:0}
+#cS1{grid-area:s1;border-top:0;padding-top:0} #cS2{grid-area:s2} #cS3{grid-area:s3}
+.cs-h{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;margin:0 0 14px;font:600 17px/1.3 var(--sans)}
+.cs-h .n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);font:600 12px/1 var(--mono);flex:none}
+.cs-h .mono{font-weight:500;font-size:12px;color:var(--faint)}
+.cs-h .btn{margin-left:auto}
+.kindrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+.kindrow .lab{font:600 13px var(--sans);color:var(--ink-2)}
+.kindrow .cap{font-size:12.5px;color:var(--muted)}
+.cm-l{display:block;font:600 13px var(--sans);color:var(--ink-2);margin:0 0 8px}
+#subject{display:block;width:100%;min-height:84px;resize:vertical;border:1px solid var(--line-2);border-radius:4px;background:var(--surface);color:var(--ink);padding:10px 12px;font:15px/1.6 var(--sans)}
+#subject:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.cap{font-size:12.5px;color:var(--muted);margin:8px 0 0;line-height:1.55}
+.prov{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:0 0 12px;padding:9px 12px;border-radius:4px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.prov b{font-weight:600;color:var(--ink)}
+.prov.undo{background:var(--accent-soft);color:var(--ink)}
+.lk{border:0;background:transparent;padding:0;color:var(--accent-ink);font:600 13px var(--sans);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.cs-list{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:2px 12px}
+.cs-l{display:grid;grid-template-columns:112px minmax(0,1fr);gap:6px 12px;align-items:start;padding:9px 0;border-bottom:1px dashed var(--line)}
+.cs-l:last-child{border-bottom:0}
+.cs-l h4{display:flex;align-items:center;gap:8px;margin:4px 0 0;font:600 12.5px var(--sans);color:var(--ink-2)}
+.cs-l h4 .n{font:500 11px var(--mono);color:var(--faint)}
+.cs-l .none{font-size:12.5px;color:var(--faint);line-height:28px}
+.schip{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:3px;background:var(--bg);overflow:hidden;transition:border-color .25s,background-color .25s}
+.schip button{border:0;background:transparent;cursor:pointer;font:500 12.5px/1.3 var(--sans);color:var(--ink);padding:5px 8px}
+.schip button.x{padding:0 7px;color:var(--faint);border-left:1px solid var(--line);font-size:14px}
+.schip button.x:hover{color:var(--L5)}
+.schip.on{border-color:var(--ink)}
+.schip.live{border-color:var(--accent);background:var(--accent-soft)}
+.schip.live button:first-child{color:var(--accent-ink)}
+.addbox{margin-top:12px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.addbox summary{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;list-style:none;font:600 13px var(--sans);color:var(--ink-2)}
+.addbox summary::-webkit-details-marker{display:none}
+.addbox summary::after{content:"+";margin-left:auto;font:500 15px/1 var(--mono);color:var(--muted)}
+.addbox[open] summary::after{content:"−"}
+.addbox[open] summary{border-bottom:1px solid var(--line)}
+.addbox summary small{font:400 12px var(--sans);color:var(--faint)}
+.addbox .search{margin:10px 12px;max-width:none}
+.alist{max-height:420px;overflow:auto;padding:0 6px 10px;border-top:1px solid var(--line)}
+.alist h5{font:600 11px/1 var(--mono);letter-spacing:.06em;color:var(--faint);margin:14px 6px 6px;display:flex;gap:6px;align-items:center}
+.arow{display:grid;grid-template-columns:minmax(0,1fr) 26px;gap:6px;align-items:center;padding:1px 6px;border-radius:3px}
+.arow:hover{background:var(--surface-2)}
+.arow .z{display:flex;align-items:baseline;gap:8px;min-width:0;border:0;background:transparent;text-align:left;cursor:pointer;padding:6px 0;color:var(--ink);font:500 13px/1.35 var(--sans)}
+.arow .z small{font:500 11px var(--sans);color:var(--faint);white-space:nowrap}
+.arow .z:hover{color:var(--accent-ink)}
+.arow .mk{width:22px;height:22px;border:1px solid var(--line-2);border-radius:3px;background:transparent;display:grid;place-items:center;font:600 12px/1 var(--mono);color:var(--faint);cursor:pointer;padding:0}
+.arow .mk::before{content:"+"}
+.arow .mk[aria-pressed="true"]{background:var(--btn);border-color:var(--btn);color:#fff}
+.arow .mk[aria-pressed="true"]::before{content:"✓"}
+.outbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+.outbar .mono{font-size:11.5px;color:var(--faint);margin-right:auto}
+.out{margin:0;border:1px solid var(--line-2);border-radius:4px;background:var(--sunk);padding:16px 18px;font:13px/1.7 var(--mono);color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere;min-height:220px;max-height:560px;overflow:auto}
+.out .xt{color:var(--accent-ink);font-weight:600}
+.out .phd{color:var(--faint)}
+.after{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.af{padding:14px 16px 12px;border:1px solid var(--line);border-top:3px solid var(--ink);background:var(--surface)}
+.af h4{display:flex;align-items:center;gap:8px;font:600 13.5px/1.3 var(--sans);margin:0 0 10px;color:var(--ink)}
+.af h4 i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--ink);font:600 11px/1 var(--mono);font-style:normal;flex:none}
+.af ol{margin:0;padding-left:20px}
+.af li{margin:0 0 6px;color:var(--ink-2)}
+.af li b{color:var(--ink)}
+.af .bound{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.cside{grid-area:side;position:sticky;top:calc(var(--safe-top) + var(--nav-h) + 16px);display:flex;flex-direction:column;gap:12px;min-width:0}
+.cpv{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:8px}
+.cpv-h{display:flex;align-items:center;gap:6px;min-height:30px;padding:0 2px 8px;font:600 13px/1.35 var(--sans);color:var(--ink)}
+.cpv-h .t{margin-right:auto;min-width:0}
+.cpv-h .t em{font-style:normal;font-weight:500;color:var(--muted)}
+.cpv-empty{position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;font:500 12px/1.7 var(--sans);color:#77756F}
+.cpv .ctrls{padding:10px 0 0}
+.cpv .r-now{margin:8px 0 0}
+.chk{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:10px 12px 6px}
+.chk>h4{font:600 11px/1 var(--mono);letter-spacing:.08em;color:var(--muted);margin:0}
+.chk>.cap{margin:6px 0 4px}
+.ck{display:grid;grid-template-columns:18px minmax(0,1fr);gap:1px 8px;padding:8px 0;border-top:1px solid var(--line)}
+.ck .m{font:600 12px/1.6 var(--mono);color:var(--faint);text-align:center}
+.ck b{font:600 13px/1.5 var(--sans)}
+.ck .q{grid-column:2;font-size:12px;color:var(--muted);line-height:1.5}
+.ck .sg{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ck.ok .m{color:var(--L4)}
+.ck.ok b{color:var(--ink-2)}
+.ck.warn{background:color-mix(in srgb,var(--L5) 7%,transparent);margin:0 -12px;padding:8px 12px}
+.ck.warn .m,.ck.warn b{color:var(--L5)}
+.ck.warn .q{color:var(--ink-2)}
+
+/* method (last section) */
+.rw-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.rws{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;align-items:start}
+.rw-col{border-top:1px solid var(--line-2);min-width:0}
+.rw{border-bottom:1px solid var(--line)}
+.rw-q{display:flex;align-items:center;gap:14px;width:100%;padding:16px 0;border:0;background:transparent;cursor:pointer;text-align:left;color:var(--ink)}
+.rw-q .v{font:400 21px/1.3 var(--serif)}
+.rw-q .v::before{content:"“";color:var(--faint)} .rw-q .v::after{content:"”";color:var(--faint)}
+.rw-q .arr{margin-left:auto;font:500 12px var(--mono);color:var(--muted);display:flex;gap:8px;align-items:center;white-space:nowrap}
+.rw-q .arr::after{content:"+";display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid var(--line-2);border-radius:3px}
+.rw-q[aria-expanded="true"] .arr::after{content:"−";background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.rw-a{padding:0 0 18px}
+.rw-a .en{margin:0 0 8px;font:13px/1.7 var(--mono);color:var(--ink);padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);overflow-wrap:anywhere}
+.rw-a .zh,.setbar .zh{margin:0 0 10px;font-size:13.5px;line-height:1.65;color:var(--ink-2)}
+.rw-a .rw-act{margin-top:12px}
+.formula{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--ink)}
+.formula li{padding:14px 16px 18px 0;margin-right:16px;position:relative}
+.formula li::before{content:"";position:absolute;left:0;right:0;top:-1px;height:3px;background:var(--lc)}
+.formula .fn{font:500 11.5px/1 var(--mono);color:var(--faint);display:flex;gap:8px;align-items:center;margin:6px 0 10px}
+.formula b{display:block;font:400 24px/1.15 var(--serif);margin-bottom:8px}
+.formula p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+/* tray */
+.tray{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,0);z-index:35;transition:transform .25s,opacity .25s;max-width:calc(100% - 24px)}
+.tray.hide{opacity:0;transform:translate(-50%,16px);pointer-events:none}
+.tray button{display:flex;align-items:center;gap:14px;width:100%;height:48px;padding:0 6px 0 18px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);color:var(--ink);font:500 13.5px/1 var(--sans);cursor:pointer;box-shadow:0 10px 30px rgba(20,20,30,.18)}
+.tray .tn{white-space:nowrap}
+.tray .tn b{font:600 15px var(--mono)}
+.tray .tb{display:flex;gap:3px}
+.tray .tb i{width:14px;height:6px;border-radius:1px;background:var(--line-2)}
+.tray .tb i.on{background:var(--lc)}
+.tray .tg{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:999px;background:var(--btn);color:var(--on-btn);font-weight:600;white-space:nowrap;margin-left:auto}
+.tray.bump button{animation:bump .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bump{40%{transform:scale(1.05)}}
+body.has-tray .foot{padding-bottom:120px}
+
+/* footer */
+.foot{margin-top:72px;border-top:1px solid var(--ink);padding:26px 0 90px;color:var(--muted);font-size:13.5px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:32px}
+.foot p{margin:0 0 8px;max-width:48em}
+.foot .brand{font-size:20px;margin-bottom:10px}
+
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);z-index:60;background:var(--toast-bg);color:var(--toast-ink);padding:10px 16px;border-radius:4px;font:500 13px var(--sans);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* responsive */
+@media (max-width:1240px){
+  .comp{grid-template-columns:minmax(0,1fr) 360px}
+  .cs-l{grid-template-columns:minmax(0,1fr)}
+  .d-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "left" "right";row-gap:0}
+  .d-left{margin-bottom:20px;max-width:760px}
+}
+@media (max-width:1000px){
+  .nav-in{gap:10px}
+  .brand small,.rail .sub{display:none}
+  .tagbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .tagbar::-webkit-scrollbar{display:none}
+  .rail{overflow-x:auto;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .rail li+li::before{width:12px;margin:0 3px}
+  .lh-body{grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+  .lh-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fs-grid{grid-template-columns:minmax(0,1fr)}
+  .fs-film{order:-1}
+  .fs-p:not(.fs-film){grid-area:2/1;visibility:hidden}
+  .fs-p.show:not(.fs-film){visibility:visible}
+  .formula{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:18px}
+  .rws{grid-template-columns:minmax(0,1fr)}
+  .rw-col+.rw-col{border-top:0}
+}
+@media (max-width:860px){
+  .anat{grid-template-columns:minmax(0,1fr);gap:0}
+  .anat-stick{top:calc(var(--safe-top) + var(--nav-h));z-index:6;background:var(--bg);margin:0 calc(-1 * var(--gut));padding:8px var(--gut) 10px;border-bottom:1px solid var(--line);max-height:none;gap:8px}
+  .anat-stick .params,.anat-stick .pp{display:none}
+  .anat-stick .scene-box{max-width:520px;width:100%;margin:0 auto}
+  .step{min-height:56vh;padding-left:16px}
+  .step:last-child{min-height:64vh}
+  .step-lines{display:block}
+  .pgrid{grid-template-columns:minmax(0,1fr)}
+  .pjoin{margin-top:16px}
+  .pjoin svg{display:none}
+  .comp{grid-template-columns:minmax(0,1fr);grid-template-areas:"s1" "s2" "side" "s3"}
+  .cside{position:static;margin-bottom:30px}
+  .after{grid-template-columns:minmax(0,1fr)}
+  .sec-h{grid-template-columns:minmax(0,1fr)}
+  .sec-no{padding:0 0 8px}
+  .ldesc{grid-template-columns:52px minmax(0,1fr);gap:0 14px}
+  .ldesc .c{font-size:30px}
+  .setbar{grid-template-columns:minmax(0,1fr)}
+  .setbar .acts{justify-content:flex-start}
+  .foot-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:700px){
+  .nav-help{display:none}
+}
+@media (max-width:560px){
+  body{font-size:14.5px}
+  .theme-btn{padding:0 8px}
+  .rail li>a{padding:7px 4px;gap:0;font-size:12.5px}
+  .rail li>a i{display:none}
+  .rail li>a b{margin-left:4px}
+  .rail li.on>a{box-shadow:inset 0 -2px 0 var(--btn);border-radius:0}
+  .rail li+li::before{width:8px;margin:0 2px}
+  .lh{padding-top:18px}
+  .lh h1{font-size:clamp(52px,16vw,72px)}
+  .lh-steps small{display:none}
+  .fs{padding:8px}
+  .fs-ab button{padding:0 6px}
+  .fs-note{flex-basis:100%;order:3}
+  .sec{padding-top:56px}
+  .paths{padding-top:44px}
+  .formula{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rw-q .arr span{display:none}
+  .ltabs button{padding-right:12px;margin-right:4px;font-size:14px}
+  .ltabs button em{display:none}
+  .tools{gap:6px;flex-wrap:nowrap}
+  .search{flex:1 1 auto;height:34px;padding:0 10px}
+  .search svg{display:none}
+  .search input{font-size:13px}
+  .selw{flex:0 1 38%}
+  .selw select{width:100%;height:34px;font-size:12.5px;padding:0 24px 0 10px}
+  .selw::after{right:8px}
+  .fs-foot .selw{flex:1 1 auto}
+  .tbtn{height:34px;padding:0 9px;font-size:12.5px}
+  .count{display:none}
+  dialog.detail{width:100%;max-height:100%;height:100%;border-radius:0;border:0}
+  .d-grid{padding:16px 16px 4px;gap:20px}
+  .d-top{padding-left:14px}
+  .d-pos{display:none}
+  .d-foot{padding:14px 16px 20px}
+  .tray{left:12px;right:12px;transform:none;max-width:none}
+  .tray.hide{transform:translateY(16px)}
+  .tray button{gap:10px;padding-left:14px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .pp-l.fresh{animation:none;background:var(--accent-soft)}
+  .tray,.toast,.fw,.fl,.ff,.fr i{transition:none}
+  .tray.bump button,.flash{animation:none}
+}
+</style>
+
+<a class="skip" href="#library">跳到词库</a>
+<nav class="nav" aria-label="主导航">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">动效词典 <small>OPUS 5.5 · LEXICON</small></a>
+    <ol class="rail" id="rail" aria-label="从挑词到出片">
+      <li data-st="1"><a href="#paths"><i>1</i>挑词</a><span class="sub"><a href="#anatomy" data-sec="anatomy">解剖</a><a href="#library" data-sec="library">词库</a><a href="#recipes" data-sec="recipes">配方</a></span></li>
+      <li data-st="2"><a href="#composer"><i>2</i>配方器<b id="navN" aria-label="已选词数"></b></a></li>
+      <li data-st="3"><a href="#after-plan" data-goto="after-plan"><i>3</i>分镜</a></li>
+      <li data-st="4"><a href="#after-film" data-goto="after-film"><i>4</i>出片</a></li>
+    </ol>
+    <a class="nav-help" id="navHelp" href="#method">说不清？</a>
+    <button type="button" class="theme-btn" id="themeBtn">自动</button>
+  </div>
+</nav>
+
+<main id="main">
+<header class="wrap hero lh" id="top">
+  <div class="lh-body">
+    <div class="lh-l">
+      <p class="kicker"><b>Claude Opus 5.5</b> · Motion Prompt Lexicon · <span data-asof></span></p>
+      <h1>动效词典</h1>
+      <p class="lh-say">把「高级一点」换成<br>模型听得懂的词</p>
+      <p class="lh-sub">每个词都配实时演示和可直接粘贴的中英文写法。右边这段，就是加上其中一组词做出来的。<span id="stats"></span></p>
+      <div class="lh-cta"><button type="button" class="btn primary lg" data-load="launch">把这组词载入配方器</button><a class="fs-next" href="#paths">三条路，选一条开始 ↓</a></div>
+    </div>
+    <div class="lh-r">
+      <div class="lh-frame"><div class="demo" id="lhFilm"></div></div>
+      <div class="lh-now" id="lhNow" aria-hidden="true"></div>
+    </div>
+  </div>
+  <ol class="lh-steps" aria-label="从挑词到出片">
+    <li><a href="#paths"><i>01</i><b>挑词</b><small>场景配方最快，分层词库最全</small></a></li>
+    <li><a href="#composer"><i>02</i><b>配方器组装</b><small>选好的词 + 一句主题</small></a></li>
+    <li><a href="#after-plan" data-goto="after-plan"><i>03</i><b>核对分镜</b><small>先让模型给方案，你来核对</small></a></li>
+    <li><a href="#after-film" data-goto="after-film"><i>04</i><b>出片</b><small>以实际成片验收</small></a></li>
+  </ol>
+</header>
+
+<section class="wrap flowsec" id="flow" aria-labelledby="h-flow">
+  <header class="paths-h"><h2 id="h-flow">从挑词到出片，一共四步</h2><p>下面这块会自动演示一遍；点任一格可以停下来看。</p></header>
+  <div class="fs" id="fs" role="group" aria-label="从挑词到出片的流程演示">
+    <div class="fs-grid">
+      <section class="fs-p" data-fs="1"><h2><button type="button" data-herogo="1"><i>1</i>挑词</button></h2><div class="fs-b" id="fsWords"></div><p class="fs-c">从词库或场景配方里挑</p></section>
+      <section class="fs-p" data-fs="2"><h2><button type="button" data-herogo="2"><i>2</i>配方器组装</button></h2><pre class="fs-b fs-pr" id="fsPrompt"></pre><p class="fs-c">选好的词 + 一句主题</p></section>
+      <section class="fs-p" data-fs="3"><h2><button type="button" data-herogo="3"><i>3</i><span id="fsBoardT">核对分镜</span></button></h2><div class="fs-b fs-bd" id="fsBoard"></div><p class="fs-c">先让模型给方案，你来核对</p></section>
+      <section class="fs-p fs-film" data-fs="4"><h2><button type="button" data-herogo="4"><i>4</i>出片</button><span class="fs-ab" role="group" aria-label="对照：A 只写内容 / B 加上这组词"><button type="button" data-heroab="0" aria-pressed="false"><em>A</em>只写内容</button><button type="button" data-heroab="1" aria-pressed="true"><em>B</em>加上这组词</button></span></h2><div class="fs-filmbox"><div class="demo" id="fsFilm"></div></div></section>
+    </div>
+    <div class="fs-line"><button type="button" class="fs-pp" id="fsPP" data-heroplay aria-label="暂停">❚❚</button><div class="fs-track" aria-hidden="true"><i id="fsBar"></i><b style="left:15.4%"></b><b style="left:33.3%"></b><b style="left:48.7%"></b></div></div>
+  </div>
+  <div class="fs-foot">
+    <span class="fs-lab">换个场景</span>
+    <label class="selw"><span class="sr">换个场景</span><select id="fsSel"></select></label>
+    <button type="button" class="btn primary" id="fsLoad" data-load="">把这组词载入配方器</button>
+    <span class="fs-note">演示是示意实现。词典提炼自<a data-gallery target="_blank" rel="noopener">动效片库</a>的 22 条成片提示词 · 数据截至 <span data-asof></span></span>
+    <a class="fs-next" href="#paths">三条路，选一条开始 ↓</a>
+  </div>
+</section>
+
+<section class="sec paths" id="paths" aria-labelledby="h-paths">
+  <div class="wrap">
+    <header class="paths-h"><h2 id="h-paths">三条路，选一条开始</h2><p>三条路都通向配方器，随时可以换另一条。</p></header>
+    <div class="pgrid">
+      <a class="pcard" href="#anatomy"><div class="pthumb"><div class="scene-box" id="pthA"></div></div><span class="pk">看滚动</span><b>滚动解剖</b><span class="pd">同一句需求，逐层加词，看画面怎么变</span><span class="pf">适合第一次来，想先弄懂为什么</span></a>
+      <a class="pcard" href="#library"><div class="pthumb"><div class="demo" id="pthB"></div></div><span class="pk">看词库</span><b>分层词库</b><span class="pd">75 个词，逐个看演示和写法</span><span class="pf">适合想逐个挑、系统补齐</span></a>
+      <a class="pcard" href="#recipes"><div class="pthumb"><div class="demo" id="pthC"></div></div><span class="pk">看配方</span><b>场景配方</b><span class="pd">10 个场景的现成组合，各配 10 秒演示</span><span class="pf">适合想最快开始</span></a>
+    </div>
+    <a class="pjoin" href="#composer"><svg viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true"><path d="M100 0V17H500V0M300 0V34" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/></svg><span>三条路都通向配方器 →</span></a>
+  </div>
+</section>
+
+<section class="sec" id="anatomy" aria-labelledby="h-anat">
+  <div class="wrap">
+    <header class="sec-h"><span class="sec-no">01</span><div><h2 id="h-anat">滚动解剖<em>Anatomy of a prompt</em></h2><p>同一句需求，逐层加词。向下滚动：左边这支 6 秒的小片子会随每一步加入的关键词实时改变，下方的提示词同步累积。</p></div></header>
+    <div class="anat">
+      <div class="anat-stick">
+        <div class="anat-head"><span class="anat-label" id="anatLabel">STEP 0</span><div class="pips" id="anatPips" role="group" aria-label="跳到步骤"></div></div>
+        <div class="scene-box" id="anatScene" role="img" aria-label="参数化演示短片：Meet Nimbus，随步骤改变缓动、配色、字体、转场和镜头"></div>
+        <dl class="params" id="anatParams" aria-label="当前画面参数"></dl>
+        <div class="pp">
+          <div class="pp-h">累积提示词<span class="mono" id="ppStat"></span><button type="button" class="btn sm" id="ppCopy">复制</button></div>
+          <div class="pp-b" id="ppBody"></div>
+        </div>
+      </div>
+      <ol class="anat-steps" id="anatSteps"></ol>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="library" aria-labelledby="h-lib">
+  <div class="wrap">
+    <header class="sec-h"><span class="sec-no">02</span><div><h2 id="h-lib">分层词库<em>The lexicon</em></h2><p>每张卡片上面是演示：有 A/B 的会自动交替，A 是不加这个词的常见默认做法，B 是加上之后。下面是可直接粘贴的英文写法。可以按层看，也可以按场景配方或模糊说法筛选；点「＋ 加入配方器」，词会进入配方器。</p></div></header>
+    <div class="fbar" id="fbar">
+      <div class="ltabs" id="ltabs" role="group" aria-label="按层筛选"></div>
+      <div class="tools">
+        <label class="search"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="sr">搜索关键词</span><input type="search" id="q" placeholder="搜索：中文名、英文写法、含义、场景…" autocomplete="off"></label>
+        <label class="selw"><span class="sr">按场景配方或模糊说法筛选</span><select id="setSel"></select></label>
+        <button type="button" class="tbtn" id="advOnly" aria-pressed="false">仅看进阶</button>
+        <span class="count" id="count" aria-live="polite"></span>
+      </div>
+      <div class="tagbar" id="tagbar" role="group" aria-label="按适用场景筛选"></div>
+    </div>
+    <div id="libTop"></div>
+    <div id="libOut"></div>
+  </div>
+</section>
+
+<section class="sec" id="recipes" aria-labelledby="h-rec">
+  <div class="wrap">
+    <header class="sec-h"><span class="sec-no">03</span><div><h2 id="h-rec">场景配方<em>Recipes</em></h2><p>十个常见场景的现成词组合，按层排好。每张卡顶部是这组词叠在一起的 10 秒组合演示：A 只写内容，B 加上这组词；B 播放时，正在起作用的词会同步高亮。挑一个最接近的「载入配方器」，再按需要增删。</p></div></header>
+    <div id="recipeList"></div>
+  </div>
+</section>
+
+<section class="sec" id="composer" aria-labelledby="h-comp">
+  <div class="wrap">
+    <header class="sec-h"><span class="sec-no">04</span><div><h2 id="h-comp">配方器<em>Composer</em></h2><p>选好的词 + 一句话内容 = 一条结构化提示词。词可以来自场景配方、分层词库，也可以在这里直接添加。</p></div></header>
+    <div class="comp">
+      <div class="cstep" id="cS1">
+        <h3 class="cs-h" id="c1h" tabindex="-1"><span class="n">1</span>做什么，讲什么</h3>
+        <div class="kindrow"><span class="lab">形态</span><div class="seg" id="kindSeg" role="group" aria-label="形态"><button type="button" data-kind="video" aria-pressed="false">视频</button><button type="button" data-kind="web" aria-pressed="false">网页</button></div><span class="cap" id="kindCap"></span></div>
+        <label class="cm-l" for="subject">用一句话写你的主题／产品／素材</label>
+        <textarea id="subject" rows="3" placeholder="例：Nimbus 是帮团队排周计划的 App，本片只展示同步日历、保护专注时段、共享计划三个功能。"></textarea>
+        <p class="cap">写真实内容：主角是什么、要讲什么、有哪些已确定的素材或限制。不补造数字和效果。</p>
+      </div>
+      <div class="cstep" id="cS2">
+        <h3 class="cs-h"><span class="n">2</span>已选词<span class="mono" id="selN"></span><button type="button" class="btn sm" id="clearSel">清空</button></h3>
+        <div id="prov"></div>
+        <div class="cs-list" id="compSel"></div>
+        <details class="addbox" id="addBox">
+          <summary>从词库添加 <small>点词名看演示，点方框加入</small></summary>
+          <label class="search"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="sr">筛选可添加的关键词</span><input type="search" id="addQ" placeholder="筛选…" autocomplete="off"></label>
+          <div class="alist" id="addList"></div>
+        </details>
+      </div>
+      <div class="cstep" id="cS3">
+        <h3 class="cs-h"><span class="n">3</span>复制提示词</h3>
+        <div class="outbar">
+          <div class="seg" role="group" aria-label="提示词语言"><button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" aria-pressed="false">中文</button></div>
+          <span class="mono" id="outStat"></span>
+          <button type="button" class="btn primary" id="copyOut">复制提示词</button>
+        </div>
+        <pre class="out" id="out" tabindex="0" aria-label="生成的提示词"></pre>
+        <p class="cap">切换 EN／中文只改变词条写法和结尾语句，不会翻译你输入的主题。</p>
+        <div class="after" id="after">
+          <div class="af" id="after-plan"><h4><i>3</i>粘贴之后 · 核对方案</h4><ol><li><b>先让它给分镜或方案</b>，核对是否覆盖你的内容、每个镜头（每屏）是否只讲一件事。</li><li><b>确认方案后</b>，再让它写代码。</li></ol></div>
+          <div class="af" id="after-film"><h4><i>4</i>粘贴之后 · 验收成片</h4><ol start="3"><li><b>打开生成的网页，或播放导出的视频</b>，检查文字、镜头节奏、交互和平台画幅。</li></ol><p class="bound">页面上的演示都是示意实现，不代表模型一定做出同样画面；复制出的组合是新的创作指令，以分镜和成片验收为准。</p></div>
+        </div>
+      </div>
+      <aside class="cside" aria-label="预览与检查">
+        <div class="cpv">
+          <div class="cpv-h"><span class="t" id="cpvTitle">预览</span><span id="cpvTools"></span></div>
+          <div class="demo" id="cpv"></div>
+          <div id="cpvCtrls"></div>
+          <p class="r-now" id="cpvNow" hidden><b>NOW</b><span></span></p>
+        </div>
+        <div class="chk" id="hints"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="sec" id="method" aria-labelledby="h-meth">
+  <div class="wrap">
+    <header class="sec-h"><span class="sec-no">05</span><div><h2 id="h-meth">说不清要什么？<em>Method</em></h2><p>先把「高级一点」「酷一点」这类模糊说法换成精确的词；再按六个问题检查一条提示词有没有说全。</p></div></header>
+    <div class="rw-top"><h3 class="mini-h" style="margin:0">把模糊的话改写成精确的词</h3><button type="button" class="btn sm" id="rwAll">全部展开</button></div>
+    <div class="rws" id="rws"></div>
+    <h3 class="mini-h" style="margin:52px 0 12px">写一条动效提示词，按顺序回答六个问题</h3>
+    <ol class="formula" id="formula"></ol>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="brand">动效词典</p>
+      <p>本页的 75 个关键词提炼自「动效片库」中的 22 条成片提示词。每个词的演示是为本页制作的示意实现，用来说明这个词的意思，不是成片本身。</p>
+    </div>
+    <div>
+      <p><a data-gallery target="_blank" rel="noopener">动效片库：看完整成片提示词 ↗</a> · <a href="docs/usage.md" target="_blank" rel="noopener">配方器使用说明书 ↗</a></p>
+      <p class="mono" style="font-size:12px">数据截至 <span data-asof></span> · Claude Opus 5.5</p>
+    </div>
+  </div>
+</footer>
+
+<div class="tray hide" id="tray" inert><button type="button" data-gocomp><span class="tn">已选 <b id="trayN">0</b> 词</span><span class="tb" id="trayBar" aria-hidden="true"></span><span class="tg">去配方器 →</span></button></div>
+<dialog class="detail" id="detail" aria-labelledby="dTitle"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script>/*__RUNTIME__*/</script>
+<script>/*__SCENE__*/</script>
+<script>/*__DEMOS__*/</script>
+<script type="application/json" id="lexicon">__LEXICON__</script>
+<script>
+(() => {
+'use strict';
+const D = JSON.parse(document.getElementById('lexicon').textContent);
+const KW = D.keywords, BY = {}; KW.forEach((k, i) => { k._i = i; BY[k.id] = k; });
+const LAY = D.layers, LBY = {}; LAY.forEach(l => { LBY[l.id] = l; });
+const SC = D.scenarios, SBY = {}; SC.forEach(s => { SBY[s.id] = s; });
+const RW = D.method.rewrites, FORM = D.method.formula;
+const GAL = D.gallery, AN = D.anatomy;
+const AN_KEYS = Array.from(new Set(AN.flatMap(s => s.add))).filter(id => BY[id]);
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+const coarse = matchMedia('(pointer: coarse)');
+const lc = (L, txt) => `<i class="lc" style="--lc:var(--${L})">${txt || L}</i>`;
+const kchip = id => { const k = BY[id]; if (!k) return `<span class="kchip dead">${esc(id)}</span>`; return `<button type="button" class="kchip" data-open="${k.id}" style="--lc:var(--${k.layer})" title="${esc(k.en)}">${lc(k.layer)}<span>${esc(k.zh)}</span></button>`; };
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } } };
+const ICON_COPY = '<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 10.5V3.8C3 3.3 3.3 3 3.8 3h6.7" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>';
+const fmt = (v, step) => { const d = (String(step).split('.')[1] || '').length; return Number(v).toFixed(d); };
+const smooth = () => (reduced ? 'auto' : 'smooth');
+const orderIds = ids => ids.map(id => BY[id]).filter(Boolean).sort((a, b) => a._i - b._i);
+const navBottom = () => $('.nav').getBoundingClientRect().bottom;
+function raf1(fn) { let q = 0; return () => { if (!q) q = requestAnimationFrame(() => { q = 0; fn(); }); }; }
+function focusQuiet(el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } }
+
+/* toast + clipboard */
+const toastEl = $('#toast'); let toastT = 0;
+function toast(msg) { toastEl.textContent = msg; toastEl.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('on'), 2400); }
+function selectNode(node) { try { if (node.select) { node.focus(); node.select(); return; } const r = document.createRange(); r.selectNodeContents(node); const s = getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) { /* ignore */ } }
+function copy(text, node, ok) {
+  const fail = () => { if (node) selectNode(node); toast('浏览器不允许直接复制：已选中文本，请按 ⌘/Ctrl + C'); };
+  try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => toast(ok || '已复制'), fail); else fail(); } catch (e) { fail(); }
+}
+
+/* theme */
+const themeBtn = $('#themeBtn'); let theme = store.get('lexicon.theme', 'auto');
+function applyTheme() {
+  const root = document.documentElement; if (theme === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', theme);
+  const lab = { auto: '自动', light: '浅色', dark: '深色' }[theme]; themeBtn.textContent = lab; themeBtn.setAttribute('aria-label', '配色主题：' + lab + '（点击切换）');
+}
+themeBtn.addEventListener('click', () => { theme = { auto: 'light', light: 'dark', dark: 'auto' }[theme] || 'auto'; store.set('lexicon.theme', theme); applyTheme(); });
+applyTheme();
+
+/* static fills */
+$$('[data-asof]').forEach(e => { e.textContent = D.as_of; });
+$$('[data-gallery]').forEach(a => { a.href = GAL; });
+$('#stats').textContent = `${KW.length} 词 · ${LAY.length} 层 · ${SC.length} 场景`;
+const zhOf = r => r.keys.map(id => BY[id].zh_phrase).join('');
+const lcount = L => KW.filter(k => k.layer === L).length;
+
+/* ── selection state (what the composer assembles) ────────── */
+const R0 = store.get('lexicon.recipe.v1', {}) || {};
+const R = {
+  sel: Array.isArray(R0.sel) ? R0.sel.filter(id => BY[id]) : [],
+  lang: R0.lang === 'zh' ? 'zh' : 'en',
+  text: typeof R0.text === 'string' ? R0.text : '',
+  kind: R0.kind === 'video' || R0.kind === 'web' ? R0.kind : '',
+  base: R0.base === 'anatomy' || SBY[R0.base] ? R0.base : null,
+};
+if (!R.sel.length) R.base = null;
+const saveR = () => store.set('lexicon.recipe.v1', { sel: R.sel, lang: R.lang, text: R.text, kind: R.kind, base: R.base });
+let undoSnap = null, pvPick = null;
+const inRecipe = id => R.sel.includes(id);
+const baseKeys = () => (R.base === 'anatomy' ? AN_KEYS : R.base && SBY[R.base] ? SBY[R.base].keys.filter(id => BY[id]) : []);
+const baseLabel = b => (b === 'anatomy' ? '滚动解剖示例' : SBY[b] ? `「${SBY[b].zh}」配方` : '');
+function toggleRecipe(id, force) {
+  const has = inRecipe(id), want = force == null ? !has : force;
+  if (want && !has) R.sel.push(id); if (!want && has) R.sel = R.sel.filter(x => x !== id);
+  if (!want && pvPick === id) pvPick = null;
+  undoSnap = null; if (!R.sel.length) R.base = null;
+  saveR(); onRecipeChange(want && !has); return want;
+}
+function addMany(ids) { let n = 0; ids.forEach(id => { if (BY[id] && !inRecipe(id)) { R.sel.push(id); n++; } }); undoSnap = null; saveR(); onRecipeChange(n > 0); return n; }
+function syncAddBtn(b) { const on = inRecipe(b.dataset.add); b.setAttribute('aria-pressed', String(on)); if (b.dataset.l0) b.textContent = on ? b.dataset.l1 : b.dataset.l0; }
+function syncAddset() { $$('[data-addset]').forEach(b => { const all = (setIds(b.dataset.addset) || []).every(inRecipe); b.textContent = all ? '✓ 已全部加入' : '全部加入配方器'; b.setAttribute('aria-pressed', String(all)); }); }
+function onRecipeChange(bump) { renderComposer(); $$('[data-add]').forEach(syncAddBtn); syncAddset(); updateTray(bump); }
+function loadSet(ids, base, kind, label) {
+  ids = ids.filter(id => BY[id]);
+  const same = R.sel.length === ids.length && ids.every(id => R.sel.includes(id));
+  undoSnap = R.sel.length && !same ? { sel: R.sel.slice(), kind: R.kind, base: R.base } : null;
+  R.sel = ids.slice(); if (kind) R.kind = kind; R.base = base; pvPick = null;
+  saveR(); onRecipeChange(false); goComposer(true);
+  toast('已载入配方器：' + label);
+}
+function undoLoad() { if (!undoSnap) return; const u = undoSnap; undoSnap = null; R.sel = u.sel.slice(); R.kind = u.kind; R.base = u.base; pvPick = null; saveR(); onRecipeChange(false); toast('已恢复你之前的选词'); }
+function restoreBase() { const ks = baseKeys(); if (!ks.length) return; R.sel = ks.slice(); undoSnap = null; pvPick = null; saveR(); onRecipeChange(false); }
+function goComposer(focus) {
+  const h = $('#composer .sec-h');
+  scrollTo({ top: Math.max(0, h.getBoundingClientRect().top + scrollY - navBottom() - 12), behavior: smooth() });
+  if (focus) focusQuiet(coarse.matches ? $('#c1h') : $('#subject'));
+}
+function gotoEl(id) {
+  const el = document.getElementById(id); if (!el) return;
+  el.scrollIntoView({ behavior: smooth(), block: el.offsetHeight > innerHeight * 0.8 ? 'start' : 'center' });
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1900);
+  const h = el.querySelector('h4, h3, .name'); if (h) { if (!h.matches('button')) h.setAttribute('tabindex', '-1'); focusQuiet(h); }
+}
+
+/* ── anatomy ──────────────────────────────────────────────── */
+const PKEYS = ['easing', 'transition', 'camera', 'palette', 'type', 'texture', 'density', 'onBeat', 'stagger', 'onTwos', 'blur', 'slop', 'frame'];
+const PLAB = { easing: '缓动', transition: '转场', camera: '镜头', palette: '配色', type: '字体', texture: '材质', density: '密度', onBeat: '卡拍', stagger: '错峰', onTwos: '一拍二', blur: '运动模糊', slop: 'AI 味', frame: '固定舞台' };
+const PVAL = {
+  easing: { linear: '线性', bouncy: '弹跳', expo: '快起慢收', spring: '弹簧', slow: '慢缓动' },
+  transition: { cut: '硬切', masked: '遮罩揭示', match: '匹配剪辑', iris: '圆形打开', whip: '甩镜', push: '推进硬切' },
+  camera: { static: '固定', zoom: '推近', parallax: '视差' },
+  palette: { default: '多色平均', 'one-accent': '单一强调色', 'ink-paper': '油墨纸', 'dark-premium': '暗色高级' },
+  type: { default: '默认', roles: '分角色', extremes: '走极端' },
+  texture: { flat: '平涂', grain: '颗粒', halftone: '网点', glass: '毛玻璃' },
+  density: { busy: '塞满', minimal: '留白' },
+};
+const pval = (k, v) => (typeof v === 'boolean' ? (v ? '开' : '关') : ((PVAL[k] || {})[v] || v));
+const paramsHTML = (p, prev) => PKEYS.map(k => `<div class="pv${prev && prev[k] !== p[k] ? ' ch' : ''}${p[k] === false ? ' off' : ''}"><dt>${PLAB[k]}</dt><dd>${esc(pval(k, p[k]))}</dd></div>`).join('');
+const cum = AN.map((_, i) => AN.slice(0, i + 1).reduce((p, s) => Object.assign(p, s.scene || {}), Object.assign({}, SCENE.DEFAULTS)));
+const anat = SCENE.mount($('#anatScene'));
+$('#anatSteps').innerHTML = AN.map((s, i) => {
+  const diff = i ? '画面：' + Object.entries(s.scene || {}).map(([k, v]) => `${PLAB[k] || k} → ${pval(k, v)}`).join(' · ') : '画面：模型的默认审美（多色、弹跳、光晕粒子、塞满）';
+  const body = i === 0 ? `<blockquote class="step-prompt">${esc(s.prompt)}</blockquote>`
+    : `<div class="chips">${s.add.map(kchip).join('')}</div><ul class="step-lines">${s.add.map(id => `<li>${lc(BY[id].layer)}<span>${esc(BY[id].en)}</span></li>`).join('')}</ul>`;
+  const end = i === AN.length - 1 ? `<div class="anat-end"><p>这 ${AN_KEYS.length} 个词是一支 15 秒产品介绍片的完整起点。</p><button type="button" class="btn primary" data-loadset="anatomy">把这 ${AN_KEYS.length} 个词载入配方器</button><a class="btn" href="#library">去词库逐个看 ↓</a></div>` : '';
+  return `<li class="step" data-step="${i}"><p class="step-no">STEP ${String(i).padStart(2, '0')}</p><h3>${esc(s.title)}</h3><p class="step-note">${esc(s.note)}</p>${body}<p class="step-diff">${esc(diff)}</p>${end}</li>`;
+}).join('');
+$('#anatPips').innerHTML = AN.map((s, i) => `<button type="button" data-pip="${i}" aria-label="第 ${i} 步：${esc(s.title)}">${i}</button>`).join('');
+const stepEls = $$('#anatSteps .step');
+let aAct = -1, anatText = '';
+function setStep(i) {
+  if (i === aAct) return; const prev = aAct; aAct = i;
+  anat.set(cum[i]);
+  $('#anatParams').innerHTML = paramsHTML(cum[i], prev >= 0 ? cum[prev] : null);
+  stepEls.forEach((el, j) => el.classList.toggle('on', j === i));
+  $$('#anatPips button').forEach((b, j) => b.setAttribute('aria-current', j === i ? 'step' : 'false'));
+  $('#anatLabel').innerHTML = `STEP <b>${i}</b> / ${AN.length - 1} · ${esc(AN[i].title)}`;
+  const lines = [{ t: AN[0].prompt, s: 0 }];
+  for (let s = 1; s <= i; s++) AN[s].add.forEach(id => lines.push({ t: BY[id].en, s, L: BY[id].layer }));
+  const body = $('#ppBody');
+  body.innerHTML = lines.map(l => `<div class="pp-l${l.s === 0 ? ' base' : ''}${prev >= 0 && l.s > prev ? ' fresh' : ''}">${l.L ? lc(l.L) : lc('muted', '内容')}<span>${esc(l.t)}</span></div>`).join('');
+  $('#ppStat').textContent = `${lines.length} 行 · ${lines.reduce((n, l) => n + l.t.length, 0)} 字符`;
+  body.scrollTop = body.scrollHeight;
+  anatText = lines.map(l => l.t).join('\n');
+}
+const phoneMQ = matchMedia('(max-width: 860px)');
+function anatLine() { if (!phoneMQ.matches) return innerHeight * 0.5; const sb = $('.anat-stick').getBoundingClientRect().bottom; return sb + (innerHeight - sb) * 0.3; }
+const anatScroll = raf1(() => { const line = anatLine(); let act = 0; stepEls.forEach((el, i) => { if (el.getBoundingClientRect().top < line) act = i; }); setStep(act); });
+addEventListener('scroll', anatScroll, { passive: true }); addEventListener('resize', anatScroll);
+$('#anatPips').addEventListener('click', e => {
+  const b = e.target.closest('[data-pip]'); if (!b) return; const i = +b.dataset.pip, el = stepEls[i];
+  const target = el.getBoundingClientRect().top + scrollY - anatLine() + 24; scrollTo({ top: Math.max(0, target), behavior: smooth() }); setStep(i);
+});
+$('#ppCopy').addEventListener('click', () => copy(anatText, $('#ppBody'), '已复制累积提示词'));
+setStep(0);
+
+/* ── library ──────────────────────────────────────────────── */
+const F = { layer: 'L1', q: '', set: '', adv: false, tag: null, more: false };
+const TAGS = (() => { const c = {}; KW.forEach(k => k.when.forEach(w => { c[w] = (c[w] || 0) + 1; })); return Object.entries(c).sort((a, b) => b[1] - a[1]); })();
+const TAG_TOP = 10;
+function renderTags() {
+  let shown = F.more ? TAGS : TAGS.slice(0, TAG_TOP);
+  if (F.tag && !shown.some(t => t[0] === F.tag)) shown = shown.concat([TAGS.find(t => t[0] === F.tag)]);
+  $('#tagbar').innerHTML = '<span class="lbl">场景</span>' + shown.map(([t, n]) => `<button type="button" class="tag" data-tag="${esc(t)}" aria-pressed="${F.tag === t}">${esc(t)}<span>${n}</span></button>`).join('')
+    + `<button type="button" class="tag more" id="moreTags" aria-expanded="${F.more}">${F.more ? '收起' : '更多 +' + (TAGS.length - TAG_TOP)}</button>`;
+}
+const setIds = v => { if (!v) return null; const i = v.indexOf(':'), t = v.slice(0, i), x = v.slice(i + 1); if (t === 'sc' && SBY[x]) return SBY[x].keys; if (t === 'rw' && RW[+x]) return RW[+x].keys; return null; };
+let filtered = KW.slice();
+const cardState = {};
+const stateFor = k => cardState[k.id] || (cardState[k.id] = { mode: 1, touched: false, params: Object.fromEntries((k.controls || []).map(c => [c.name, c.value])) });
+function matches(k) {
+  if (F.layer !== 'all' && k.layer !== F.layer) return false;
+  if (F.adv && k.level !== '进阶') return false;
+  if (F.tag && !k.when.includes(F.tag)) return false;
+  const ids = setIds(F.set); if (ids && !ids.includes(k.id)) return false;
+  if (F.q) { const hay = [k.id, k.zh, k.en, k.what, k.when.join(' '), k.zh_phrase, k.group].join(' ').toLowerCase(); return F.q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.includes(w)); }
+  return true;
+}
+function ctrlsHTML(k, s) {
+  const parts = [];
+  if (k.ab) parts.push(`<div class="seg ab" role="group" aria-label="对照：A 不加这个词 / B 加上">${k.ab.map((l, i) => `<button type="button" data-ab="${i}" aria-pressed="${s.mode === i}" title="${esc(l)}"><i>${i ? 'B' : 'A'}</i>${esc(l)}</button>`).join('')}<span class="abbar" aria-hidden="true"><i></i></span></div>`);
+  (k.controls || []).forEach(c => parts.push(`<label class="sl"><span>${esc(c.label)}</span><input type="range" data-param="${c.name}" min="${c.min}" max="${c.max}" step="${c.step}" value="${s.params[c.name]}"><output>${fmt(s.params[c.name], c.step)}</output></label>`));
+  if (LEX.reduced) parts.push('<button type="button" class="btn sm" data-play aria-pressed="false">▶ 播放</button>');
+  return parts.length ? `<div class="ctrls">${parts.join('')}</div>` : '';
+}
+const PH = k => `<span class="demo-ph">${esc(k.id)}</span>`;
+const addBtn = (id, cls) => { const on = inRecipe(id); return `<button type="button" class="btn ${cls}" data-add="${id}" data-l0="＋ 加入配方器" data-l1="✓ 已加入" aria-pressed="${on}">${on ? '✓ 已加入' : '＋ 加入配方器'}</button>`; };
+function cardHTML(k) {
+  const s = stateFor(k);
+  return `<article class="card" id="card-${k.id}" style="--lc:var(--${k.layer})"><div class="demo" data-id="${k.id}">${PH(k)}</div>${ctrlsHTML(k, s)}
+<div class="card-b"><p class="meta">${lc(k.layer)}<span>${esc(k.group)}</span>${k.level === '进阶' ? '<span class="adv">进阶</span>' : ''}<code>${k.id}</code></p>
+<h4 class="kname"><button type="button" class="name" data-open="${k.id}">${esc(k.zh)}</button></h4>
+<div class="en"><p class="en-t copy-src" title="${esc(k.en)}">${esc(k.en)}</p><button type="button" class="icon-btn" data-copy="en:${k.id}" aria-label="复制英文写法：${esc(k.zh)}">${ICON_COPY}</button></div>
+<p class="when-t">适用：${k.when.slice(0, 3).map(esc).join(' · ')}</p>
+<div class="acts"><button type="button" class="btn sm" data-open="${k.id}">详情</button>${addBtn(k.id, 'sm add')}</div></div></article>`;
+}
+/* lazy demo lifecycle: mount near viewport, destroy when far, cap 16 */
+const MAX_LIVE = 16, live = new Map();
+function syncAB(scope, m, auto, s) {
+  const seg = scope && scope.querySelector('.seg.ab'); if (!seg) return;
+  seg.querySelectorAll('[data-ab]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.ab === m)));
+  const bar = seg.querySelector('.abbar');
+  if (s.touched || LEX.reduced) { bar.classList.remove('run'); bar.hidden = true; return; }
+  if (auto !== null) { bar.hidden = false; bar.classList.remove('run'); void bar.offsetWidth; bar.classList.add('run'); }
+}
+function mountDemo(el) {
+  if (live.has(el) || !el.isConnected) return;
+  if (live.size >= MAX_LIVE) evictFarthest(el);
+  const k = BY[el.dataset.id], s = stateFor(k), card = el.closest('.card');
+  const ctl = LEX.mount(k.id, el, { hasAB: !!k.ab, autoAB: !s.touched, mode: s.mode, params: Object.assign({}, s.params), onMode: (m, auto) => { s.mode = m; if (!auto) s.touched = true; syncAB(card, m, auto, s); } });
+  live.set(el, ctl);
+  syncAB(card, s.mode, false, s);
+}
+function unmountDemo(el) {
+  if (!live.has(el)) return; const c = live.get(el); live.delete(el);
+  try { if (c) c.destroy(); } catch (e) { /* demo cleanup error */ }
+  el.innerHTML = PH(BY[el.dataset.id]);
+  const card = el.closest('.card'), pb = card && card.querySelector('[data-play]'); if (pb) { pb.textContent = '▶ 播放'; pb.setAttribute('aria-pressed', 'false'); }
+}
+function evictFarthest(except) {
+  let far = null, fd = -1; const mid = innerHeight / 2;
+  live.forEach((c, el) => { if (el === except) return; const r = el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - mid); if (d > fd) { fd = d; far = el; } });
+  if (far) unmountDemo(far);
+}
+const nearIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mountDemo(e.target); }), { rootMargin: '400px 0px' });
+const farIO = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) unmountDemo(e.target); }), { rootMargin: '1100px 0px' });
+function unmountAll() { Array.from(live.keys()).forEach(unmountDemo); nearIO.disconnect(); farIO.disconnect(); }
+
+$('#ltabs').innerHTML = [{ id: 'all', zh: '全部', en: 'All', n: KW.length }].concat(LAY.map(l => ({ id: l.id, zh: l.zh, en: l.en, n: lcount(l.id) })))
+  .map(t => `<button type="button" data-ltab="${t.id}" aria-pressed="false" ${t.id !== 'all' ? `style="--lc:var(--${t.id})"` : ''}>${t.id !== 'all' ? `<span class="c">${t.id}</span>` : ''}${esc(t.zh)}<em>${esc(t.en)}</em><span class="n">${t.n}</span></button>`).join('');
+$('#setSel').innerHTML = `<option value="">词组：不限</option><optgroup label="场景配方">${SC.map(s => `<option value="sc:${s.id}">${esc(s.zh)}</option>`).join('')}</optgroup><optgroup label="模糊说法">${RW.map((r, i) => `<option value="rw:${i}">「${esc(r.vague)}」</option>`).join('')}</optgroup>`;
+new ResizeObserver(() => document.documentElement.style.setProperty('--fbar-h', $('#fbar').offsetHeight + 'px')).observe($('#fbar'));
+
+function descHTML() {
+  if (F.set.startsWith('sc:')) {
+    const s = SBY[F.set.slice(3)]; if (!s) return '';
+    const narrowed = F.layer !== 'all' || F.adv || F.q;
+    return `<div class="setbar"><div><p class="k">场景配方 · ${s.kind === 'web' ? '网页' : '视频'}</p><h3>${esc(s.zh)}</h3><p>${esc(s.intent)}。这组配方共 ${s.keys.length} 个词${narrowed ? `，当前筛选显示 ${filtered.length} 个` : ''}，逐个看演示，再决定保留哪些。</p></div><div class="acts"><button type="button" class="btn sm" data-goto="r-${s.id}">看组合演示</button><button type="button" class="btn sm primary" data-load="${s.id}">载入配方器</button><button type="button" class="btn sm" data-clearset>取消筛选</button></div></div>`;
+  }
+  if (F.set.startsWith('rw:')) {
+    const r = RW[+F.set.slice(3)]; if (!r) return '';
+    const all = r.keys.every(inRecipe);
+    return `<div class="setbar"><div><p class="k">模糊说法</p><h3>「${esc(r.vague)}」可以写成</h3><p class="en">${esc(r.precise)}</p><p class="zh">中文写法：${esc(zhOf(r))}</p><p>对应下面 ${r.keys.length} 个词：看演示，拿中英文写法。</p></div><div class="acts"><button type="button" class="btn sm primary" data-addset="${F.set}" ${all ? 'aria-pressed="true"' : ''}>${all ? '✓ 已全部加入' : '全部加入配方器'}</button><button type="button" class="btn sm" data-clearset>取消筛选</button></div></div>`;
+  }
+  const L = LBY[F.layer];
+  return L ? `<div class="ldesc" style="--lc:var(--${L.id})"><span class="c">${L.id}</span><div><h3>${esc(L.zh)}<em>${esc(L.en)}</em></h3><p class="t">${esc(L.tag)}</p><p>${esc(L.what)}</p></div></div>` : '';
+}
+function renderDesc() { $('#libTop').innerHTML = descHTML(); }
+function renderLibrary() {
+  unmountAll();
+  filtered = KW.filter(matches);
+  $$('#ltabs [data-ltab]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ltab === F.layer)));
+  $('#advOnly').setAttribute('aria-pressed', String(F.adv));
+  const sel = $('#setSel'); sel.value = F.set; sel.parentElement.classList.toggle('on', !!F.set);
+  renderTags();
+  const act = [F.tag && `场景「${F.tag}」`, F.adv && '仅进阶', F.q && `搜索「${F.q}」`].filter(Boolean);
+  $('#count').textContent = `${filtered.length} 个词` + (act.length ? ' · ' + act.join(' · ') : '');
+  renderDesc();
+  const layers = F.layer === 'all' ? LAY : [LBY[F.layer]];
+  let html = '';
+  for (const L of layers) {
+    const ks = filtered.filter(k => k.layer === L.id); if (!ks.length) continue;
+    if (F.layer === 'all') html += `<h3 class="lib-lh" style="--lc:var(--${L.id})">${lc(L.id)}<span class="zh">${esc(L.zh)}</span><em>${esc(L.en)}</em><span class="tl">${esc(L.tag)}</span><span class="n">${ks.length} 词</span></h3>`;
+    for (const g of D.groups[L.id]) {
+      const gk = ks.filter(k => k.group === g); if (!gk.length) continue;
+      html += `<section class="lib-g" aria-label="${esc(L.zh + ' · ' + g)}"><h4 class="lib-gh"><span>${esc(g)}</span><span class="n">${gk.length}</span></h4><div class="grid">${gk.map(cardHTML).join('')}</div></section>`;
+    }
+  }
+  if (html && F.layer !== 'all' && !F.set && !F.q && !F.adv && !F.tag) {
+    const i = LAY.findIndex(l => l.id === F.layer), L = LAY[i], nx = LAY[i + 1];
+    html += `<div class="libnext"><span class="mono">${L.id} ${esc(L.zh)} · ${filtered.length} 个词</span><div>${nx ? `<button type="button" class="btn primary" data-nextlayer="${nx.id}">下一层：${nx.id} ${esc(nx.zh)} →</button>` : `<a class="btn" href="#recipes">看场景配方 ↓</a><button type="button" class="btn primary" data-gocomp>去配方器 →</button>`}</div></div>`;
+  }
+  $('#libOut').innerHTML = html || '<div class="empty"><p>没有符合条件的词。</p><button type="button" class="btn" id="clearF">清除筛选</button></div>';
+  $$('#libOut .demo').forEach(el => { nearIO.observe(el); farIO.observe(el); });
+}
+/* after a filter change: keep the results start right under the sticky bar; never jump to the section head */
+function anchorLib(nav) {
+  const top = $('#libTop').getBoundingClientRect().top, want = navBottom() + $('#fbar').offsetHeight;
+  if (nav) scrollTo({ top: Math.max(0, top + scrollY - want), behavior: smooth() });
+  else if (top < want - 1) scrollBy({ top: top - want, behavior: 'instant' });
+}
+function setFilter(patch, nav) { Object.assign(F, patch); renderLibrary(); anchorLib(nav); }
+let qT = 0;
+$('#q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { const v = e.target.value.trim(); setFilter(v && F.layer !== 'all' ? { q: v, layer: 'all' } : { q: v }, false); }, 160); });
+$('#setSel').addEventListener('change', e => { const v = e.target.value; setFilter(v ? { set: v, layer: 'all' } : { set: '' }, false); });
+$('#advOnly').addEventListener('click', () => setFilter({ adv: !F.adv }, false));
+function showSet(v) { $('#q').value = ''; setFilter({ set: v, layer: 'all', q: '' }, true); }
+
+/* controls inside cards + detail (A/B, sliders, play) */
+function ctlFor(node) { if (node.closest('#detail')) return dCtl; const card = node.closest('.card'); return card ? live.get(card.querySelector('.demo')) : null; }
+function idFor(node) { if (node.closest('#detail')) return dId; const card = node.closest('.card'); return card ? card.id.slice(5) : null; }
+document.addEventListener('input', e => {
+  const inp = e.target.closest('[data-param]'); if (!inp) return;
+  const id = idFor(inp); if (!id) return; const k = BY[id], s = stateFor(k), c = (k.controls || []).find(x => x.name === inp.dataset.param), v = +inp.value;
+  s.params[inp.dataset.param] = v; s.touched = true; inp.nextElementSibling.textContent = fmt(v, c ? c.step : 1);
+  const ctl = ctlFor(inp); if (ctl) ctl.setParam(inp.dataset.param, v);
+  syncAB(inp.closest('.card') || dlg, s.mode, false, s);
+});
+
+/* ── detail ───────────────────────────────────────────────── */
+const dlg = $('#detail'); let dCtl = null, dId = null, dReturn = null, dList = KW, dLabel = '', dAfter = null, pausedForModal = false;
+function listFrom(from, k) {
+  const rec = from && from.closest && from.closest('.recipe');
+  if (rec && SBY[rec.dataset.rec]) return [orderIds(SBY[rec.dataset.rec].keys), '本组配方'];
+  if (from && from.closest && from.closest('#composer')) { const s = sortedSel(); if (s.includes(k)) return [s, '已选词']; }
+  if (from && from.closest && from.closest('#anatomy')) return [orderIds(AN_KEYS), '解剖示例'];
+  const rwEl = from && from.closest && from.closest('.rw'); if (rwEl && RW[+rwEl.dataset.rw]) return [orderIds(RW[+rwEl.dataset.rw].keys), '这条说法'];
+  return filtered.includes(k) ? [filtered, filtered.length < KW.length ? '筛选结果' : '全部'] : [KW, '全部'];
+}
+function renderDetail(k) {
+  if (dCtl) { try { dCtl.destroy(); } catch (e) { /* ignore */ } dCtl = null; }
+  dId = k.id;
+  const s = stateFor(k), L = LBY[k.layer], n = dList.length, i = dList.indexOf(k), prev = dList[(i - 1 + n) % n], next = dList[(i + 1) % n], on = inRecipe(k.id);
+  const src = (k.src || []).map(x => /^[vw]/.test(x) ? `<a href="${esc(GAL)}#${esc(x)}" target="_blank" rel="noopener">${esc(x)} ↗</a>` : `<span>${esc(x)}</span>`).join('');
+  const inSc = SC.filter(sc => sc.keys.includes(k.id));
+  dlg.innerHTML = `<div class="d-top"><nav class="crumb" aria-label="所在位置"><span class="ly">${lc(k.layer)}${esc(L.zh)}</span><span aria-hidden="true">›</span><span>${esc(k.group)}</span><span aria-hidden="true">›</span><code>${k.id}</code></nav>
+<div class="d-tools"><span class="mono d-pos">${esc(dLabel)} ${i + 1} / ${n}</span><button type="button" class="icon-btn" data-nav="-1" aria-label="上一个：${esc(prev.zh)}">←</button><button type="button" class="icon-btn" data-nav="1" aria-label="下一个：${esc(next.zh)}">→</button><button type="button" class="icon-btn d-close" aria-label="关闭详情">×</button></div></div>
+<div class="d-grid" style="--lc:var(--${k.layer})">
+<header class="d-head"><h2 id="dTitle">${esc(k.zh)}${k.level === '进阶' ? '<span class="adv">进阶</span>' : ''}</h2><p class="d-what">${esc(k.what)}</p></header>
+<div class="d-left"><div class="demo" id="dDemo" data-id="${k.id}"></div>${ctrlsHTML(k, s)}<p class="d-see"><b>演示看点</b>${esc(k.see)}</p></div>
+<div class="d-right">
+<div class="phr"><div class="phr-h"><h3>英文写法</h3><button type="button" class="btn sm" data-copy="en:${k.id}">${ICON_COPY}复制</button></div><p class="phr-t en copy-src">${esc(k.en)}</p></div>
+<div class="phr"><div class="phr-h"><h3>中文写法</h3><button type="button" class="btn sm" data-copy="zh:${k.id}">${ICON_COPY}复制</button></div><p class="phr-t copy-src">${esc(k.zh_phrase)}</p></div>
+<h3 class="d-h">适用场景</h3><p class="d-when">${k.when.map(esc).join(' · ')}</p>
+${k.avoid ? `<h3 class="d-h">避坑</h3><p class="d-avoid">${esc(k.avoid)}</p>` : ''}
+${(k.pairs || []).length ? `<h3 class="d-h">常搭配</h3><div class="chips">${k.pairs.map(kchip).join('')}</div>` : ''}
+${inSc.length ? `<h3 class="d-h">出现在这些场景配方</h3><div class="chips">${inSc.map(sc => `<button type="button" class="wchip" data-goto="r-${sc.id}">${esc(sc.zh)} ↗</button>`).join('')}</div>` : ''}
+<h3 class="d-h">出处 · 动效片库</h3><div class="d-src">${src || '<span>—</span>'}</div>
+<button type="button" class="btn primary wide" data-add="${k.id}" data-l0="＋ 加入配方器" data-l1="✓ 已加入配方器 · 点击移除" aria-pressed="${on}">${on ? '✓ 已加入配方器 · 点击移除' : '＋ 加入配方器'}</button></div></div>
+<div class="d-foot"><button type="button" class="btn" data-nav="-1">← ${esc(prev.zh)}</button><button type="button" class="btn" data-nav="1">${esc(next.zh)} →</button></div>`;
+  dCtl = LEX.mount(k.id, $('#dDemo'), { hasAB: !!k.ab, autoAB: !s.touched, mode: s.mode, params: Object.assign({}, s.params), onMode: (m, auto) => { s.mode = m; if (!auto) s.touched = true; syncAB(dlg, m, auto, s); } });
+  syncAB(dlg, s.mode, false, s);
+  dlg.scrollTop = 0;
+  try { history.replaceState(null, '', '#k-' + k.id); } catch (e) { /* sandboxed */ }
+}
+function openDetail(id, from) {
+  const k = BY[id]; if (!k) return;
+  if (!dlg.open) { dReturn = from || document.activeElement; [dList, dLabel] = listFrom(from, k); }
+  else if (!dList.includes(k)) { dList = KW; dLabel = '全部'; }
+  if (!dlg.open && !LEX.reduced) { LEX.pauseAll(); pausedForModal = true; }
+  renderDetail(k);
+  if (!dlg.open) { dlg.showModal(); document.documentElement.classList.add('modal-open'); }
+  const c = dlg.querySelector('.d-close'); if (c) c.focus();
+}
+function navDetail(d) { const n = dList.length, i = dList.findIndex(k => k.id === dId); renderDetail(dList[(i + d + n) % n]); const b = dlg.querySelector(`.d-tools [data-nav="${d}"]`); if (b) b.focus(); }
+dlg.addEventListener('close', () => {
+  if (dCtl) { try { dCtl.destroy(); } catch (e) { /* ignore */ } dCtl = null; }
+  document.documentElement.classList.remove('modal-open');
+  try { if (/^#k-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* sandboxed */ }
+  if (pausedForModal) { LEX.playAll(); pausedForModal = false; if (HERO.ctl && HERO.paused) HERO.ctl.pause(); }
+  const card = dId && document.getElementById('card-' + dId);
+  if (card) { const el = card.querySelector('.demo'), k = BY[dId]; const old = card.querySelector('.ctrls'); if (old) old.outerHTML = ctrlsHTML(k, stateFor(k)); if (live.has(el)) { unmountDemo(el); mountDemo(el); } }
+  const after = dAfter; dAfter = null;
+  const ret = dReturn && dReturn.isConnected ? dReturn : card && card.querySelector('.name');
+  dId = null;
+  if (after) after(); else if (ret) focusQuiet(ret);
+});
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); if (e.target.closest('.d-close')) dlg.close(); });
+dlg.addEventListener('keydown', e => { if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !e.target.closest('input,textarea,select')) { e.preventDefault(); navDetail(e.key === 'ArrowLeft' ? -1 : 1); } });
+function fromHash() { const m = /^#k-(.+)$/.exec(location.hash); if (m && BY[decodeURIComponent(m[1])]) openDetail(decodeURIComponent(m[1])); }
+addEventListener('hashchange', fromHash);
+
+/* ── recipes ──────────────────────────────────────────────── */
+let recNo = 0;
+function recipeHTML(s) {
+  const no = String(++recNo).padStart(2, '0');
+  const rows = LAY.map(L => { const ks = s.keys.filter(id => BY[id] && BY[id].layer === L.id); return ks.length ? `<div class="r-row">${lc(L.id)}<div class="chips">${ks.map(kchip).join('')}</div></div>` : ''; }).join('');
+  const stage = LEX.has('sc-' + s.id) ? `<div class="r-stage"><div class="demo" data-sc="${s.id}"><span class="demo-ph">${esc(s.zh)}</span></div><div class="ctrls"><div class="seg ab" role="group" aria-label="对照：A 只写内容 / B 加上这组词"><button type="button" data-scab="0" aria-pressed="false"><i>A</i>只写内容</button><button type="button" data-scab="1" aria-pressed="true"><i>B</i>加上这组词</button><span class="abbar" aria-hidden="true"><i></i></span></div>${LEX.reduced ? '<button type="button" class="btn sm" data-scplay aria-pressed="false">▶ 播放</button>' : ''}</div><p class="r-now" aria-live="off"><b>NOW</b><span></span></p></div>` : '';
+  return `<article class="recipe" id="r-${s.id}" data-rec="${s.id}">${stage}<header><span class="no">${no}</span><h4>${esc(s.zh)}</h4></header><p class="intent">${esc(s.intent)}</p><div class="r-rows">${rows}</div><footer><span class="mono">${s.keys.length} 词</span><button type="button" class="btn sm" data-setfilter="sc:${s.id}">在词库里逐个看</button><button type="button" class="btn primary sm" data-load="${s.id}">载入配方器</button></footer></article>`;
+}
+$('#recipeList').innerHTML = [['video', '视频', '固定时长、按时间播放，最后导出成片'], ['web', '网页', '由滚动、指针和状态驱动的页面']].map(([kd, zh, note]) => {
+  const ss = SC.filter(s => s.kind === kd); if (!ss.length) return '';
+  return `<h3 class="rgroup">${zh}<span>${ss.length}</span><small>${note}</small></h3><div class="recipes">${ss.map(recipeHTML).join('')}</div>`;
+}).join('');
+/* scenario combo demos: lazy mount, A/B, live keyword highlight */
+const SCST = {}, scLive = new Map();
+const scState = id => SCST[id] || (SCST[id] = { mode: 1, touched: false });
+function scSync(card, m, auto, st) {
+  const seg = card.querySelector('.seg.ab'); if (!seg) return;
+  seg.querySelectorAll('[data-scab]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.scab === m)));
+  const bar = seg.querySelector('.abbar');
+  if (st.touched || LEX.reduced) { bar.classList.remove('run'); bar.hidden = true; }
+  else if (auto !== null) { bar.hidden = false; bar.classList.remove('run'); void bar.offsetWidth; bar.classList.add('run'); }
+  scPaint(card, m ? null : []);
+}
+const A_NOTE = '只写内容：模型默认审美，多色平均、弹跳缓动、光晕粒子、一屏塞满';
+function scPaint(card, ids) {
+  const set = new Set(ids || []), now = card.querySelector('.r-now'), m = scState(card.dataset.rec).mode;
+  card.querySelectorAll('.r-row .kchip[data-open]').forEach(c => c.classList.toggle('live', set.has(c.dataset.open)));
+  if (!now) return;
+  now.classList.toggle('a', !m);
+  now.querySelector('b').textContent = m ? 'NOW' : 'A';
+  now.querySelector('span').textContent = m ? (ids && ids.length ? ids.map(id => BY[id] ? BY[id].zh : id).join(' · ') : '') : A_NOTE;
+}
+function mountSc(el) {
+  if (scLive.has(el) || !el.isConnected) return;
+  const id = el.dataset.sc, st = scState(id), card = el.closest('.recipe');
+  const ctl = LEX.mount('sc-' + id, el, { hasAB: true, abPeriod: 10, autoAB: !st.touched, mode: st.mode, onMode: (m, auto) => { st.mode = m; if (!auto) st.touched = true; if (auto) ctl && ctl.restart(); scSync(card, m, auto, st); } });
+  scLive.set(el, ctl); scSync(card, st.mode, false, st);
+}
+function unmountSc(el) {
+  if (!scLive.has(el)) return; const c = scLive.get(el); scLive.delete(el);
+  try { if (c) c.destroy(); } catch (e) { /* demo cleanup error */ }
+  el.innerHTML = `<span class="demo-ph">${esc((SBY[el.dataset.sc] || {}).zh || '')}</span>`;
+  const card = el.closest('.recipe'); scPaint(card, []);
+  const pb = card.querySelector('[data-scplay]'); if (pb) { pb.textContent = '▶ 播放'; pb.setAttribute('aria-pressed', 'false'); }
+}
+const scNear = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mountSc(e.target); }), { rootMargin: '300px 0px' });
+const scFar = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) unmountSc(e.target); }), { rootMargin: '900px 0px' });
+$$('#recipeList .demo[data-sc]').forEach(el => { scNear.observe(el); scFar.observe(el); });
+let scLast = 0;
+(function scTick(now) {
+  if (now - scLast > 160) {
+    scLast = now;
+    scLive.forEach((ctl, el) => {
+      if (!ctl || !ctl.mode) return;
+      const r = el.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const ids = ctl.active(), key = ids.join(',');
+      if (el.__scKey !== key) { el.__scKey = key; scPaint(el.closest('.recipe'), ids); }
+    });
+    if (cpv.ctl && cpv.combo && compVisible) {
+      const ids = cpv.ctl.mode ? cpv.ctl.active().filter(inRecipe) : [], key = cpv.ctl.mode + ':' + ids.join(',');
+      if (cpv.key !== key) { cpv.key = key; paintPvLive(ids); }
+    }
+  }
+  requestAnimationFrame(scTick);
+})(0);
+function loadScenario(id) { const s = SBY[id]; if (s) loadSet(s.keys, s.id, s.kind, baseLabel(s.id)); }
+
+/* ── composer ─────────────────────────────────────────────── */
+const START = {
+  en: { video: 'Show me the plan (storyboard with timings) before writing code.', web: 'Show me the plan (section by section: the layout and where motion happens) before writing code.' },
+  zh: { video: '先给我方案（带时间点的分镜表），确认后再写代码。', web: '先给我方案（按段落列出版式和动效出现的位置），确认后再写代码。' },
+};
+const SUG = {
+  form: { video: ['fixed-stage', 'duration-fps'], web: ['reduced-motion'], '': [] },
+  lead: { video: ['one-idea', 'one-accent'], web: ['one-accent', 'type-roles'], '': ['one-idea', 'one-accent'] },
+  motion: { video: ['expo-out', 'beat-grid'], web: ['stagger', 'slow-ease'], '': ['expo-out', 'slow-ease'] },
+  drive: { video: [], web: ['scroll-reveal', 'tilt-glare'], '': ['scroll-reveal'] },
+  frame: { video: ['s-shot-list', 's-five-scene'], web: ['s-landing-signature', 's-longread'], '': ['s-shot-list', 's-landing-signature'] },
+  guard: { video: ['anti-slop', 'contact-sheet'], web: ['anti-slop'], '': ['anti-slop'] },
+};
+const sortedSel = () => orderIds(R.sel);
+function promptFor(ids, kind, text, zh) {
+  const ph = k => (zh ? k.zh_phrase : k.en), sel = orderIds(ids), by = L => sel.filter(k => k.layer === L), out = [];
+  out.push((text || '').trim() || (zh ? '[用一句话写你的主题/产品/素材]' : '[One sentence: your subject / product / material]'));
+  const dir = by('L2').concat(by('L3'), by('L4')).map(ph); if (dir.length) out.push('', '<direction>', ...dir, '</direction>');
+  const st = by('L5').map(ph); if (st.length) out.push('', '<structure>', ...st, '</structure>');
+  const bd = by('L1').filter(k => k.id !== 'storyboard-first').map(ph); if (bd.length) out.push('', '<build>', ...bd, '</build>');
+  out.push('', '<start>', ids.includes('storyboard-first') ? ph(BY['storyboard-first']) : START[zh ? 'zh' : 'en'][kind === 'web' ? 'web' : 'video'], '</start>');
+  return out.join('\n');
+}
+const buildPrompt = () => promptFor(R.sel, R.kind, R.text, R.lang === 'zh');
+function renderOut() {
+  const txt = buildPrompt();
+  $('#out').innerHTML = esc(txt).replace(/&lt;\/?(direction|structure|build|start)&gt;/g, m => `<span class="xt">${m}</span>`).replace(/^\[.*\]$/m, m => `<span class="phd">${m}</span>`);
+  $('#outStat').textContent = `${R.sel.length} 词 · ${txt.split('\n').length} 行 · ${txt.length} 字符`;
+  $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === R.lang)));
+}
+function provHTML() {
+  if (undoSnap) return `<div class="prov undo"><span>已载入<b>${esc(baseLabel(R.base))}</b>，替换了你之前的 ${undoSnap.sel.length} 个词</span><button type="button" class="lk" data-undo>撤销</button></div>`;
+  if (!R.sel.length) return '<div class="prov"><span>还没有选词。可以在<a href="#recipes">场景配方</a>载入一组，在<a href="#library">分层词库</a>逐个加入，或在下方「从词库添加」。</span></div>';
+  if (!R.base) return '';
+  const bk = baseKeys(), add = R.sel.filter(id => !bk.includes(id)).length, rem = bk.filter(id => !R.sel.includes(id)).length;
+  return `<div class="prov"><span>基于<b>${esc(baseLabel(R.base))}</b>${add || rem ? ` · 另加 ${add} · 移除 ${rem}` : ' · 未改动'}</span>${add || rem ? '<button type="button" class="lk" data-restore>恢复配方</button>' : ''}</div>`;
+}
+const sugBtn = id => `<button type="button" class="btn sm" data-add="${id}" data-l0="＋ ${esc(BY[id].zh)}" data-l1="✓ ${esc(BY[id].zh)}" aria-pressed="false">＋ ${esc(BY[id].zh)}</button>`;
+function checkHTML() {
+  const sel = sortedSel(), has = L => sel.some(k => k.layer === L), kd = R.kind;
+  const rows = [
+    { f: FORM[0], st: kd && has('L1') ? 'ok' : 'todo', note: kd ? '' : '先在第 1 步选视频还是网页', sg: has('L1') ? [] : SUG.form[kd] },
+    { f: FORM[1], st: sel.some(k => k.layer === 'L2' && k.id !== 'anti-slop') ? 'ok' : 'todo', sg: SUG.lead[kd] },
+    { f: FORM[2], st: has('L3') ? 'ok' : 'todo', sg: SUG.motion[kd] },
+    { f: FORM[3], st: has('L4') ? 'ok' : kd === 'video' ? 'na' : 'todo', note: kd === 'video' && !has('L4') ? '视频由时间驱动，这一条可以跳过' : '', sg: SUG.drive[kd] },
+    { f: FORM[4], st: has('L5') ? 'ok' : 'todo', sg: SUG.frame[kd] },
+    { f: FORM[5], st: inRecipe('anti-slop') ? 'ok' : 'todo', note: '「先出分镜再写代码」已经写在提示词结尾', sg: SUG.guard[kd] },
+  ];
+  const warns = [];
+  if (kd) {
+    const bad = sel.filter(k => k.media === (kd === 'video' ? 'web' : 'video'));
+    if (bad.length) warns.push({ msg: `下面 ${bad.length} 个词` + (kd === 'video' ? '是网页用法，视频里用不上。' : '是视频用法，网页里通常不需要。'), ids: bad.map(k => k.id) });
+  }
+  if (inRecipe('spring') && inRecipe('slow-ease')) warns.push({ msg: '「弹簧缓动」带轻微过冲，「慢缓动」要求不弹不闪，方向相反，保留一个。', ids: ['spring', 'slow-ease'] });
+  const mark = { ok: '✓', na: '–', todo: '○' };
+  return '<h4>检查清单 · 写提示词要回答的六个问题</h4><p class="cap">没打勾的条目按作品需要再补；这不是质量评分。</p>'
+    + warns.map(w => `<div class="ck warn"><span class="m">!</span><b>冲突</b><span class="q">${esc(w.msg)}</span><div class="sg">${w.ids.map(id => `<button type="button" class="btn sm" data-remove="${id}">移除：${esc(BY[id].zh)}</button>`).join('')}</div></div>`).join('')
+    + rows.map(r => { const sg = r.st === 'todo' ? (r.sg || []).filter(id => BY[id] && !inRecipe(id)) : []; return `<div class="ck ${r.st}"><span class="m" aria-label="${r.st === 'ok' ? '已满足' : r.st === 'na' ? '可跳过' : '未满足'}">${mark[r.st]}</span><b>${esc(r.f.part)}</b><span class="q">${esc(r.f.q)}${r.note ? '<br>' + esc(r.note) : ''}</span>${sg.length ? `<div class="sg">${sg.map(sugBtn).join('')}</div>` : ''}</div>`; }).join('');
+}
+/* composer preview: its own LEX instance, outside `live` and `scLive` */
+const cpv = { ctl: null, cur: null, combo: false, key: null, st: { mode: 1, touched: false } };
+function pvTarget() { if (pvPick && BY[pvPick]) return pvPick; if (R.base && SBY[R.base] && LEX.has('sc-' + R.base)) return 'sc:' + R.base; return null; }
+function renderPv() {
+  const want = pvTarget();
+  if (want === cpv.cur) { paintPvHead(); return; }
+  if (cpv.ctl) { try { cpv.ctl.destroy(); } catch (e) { /* ignore */ } cpv.ctl = null; }
+  cpv.cur = want; cpv.combo = !!want && want.startsWith('sc:'); cpv.key = null; cpv.st = { mode: 1, touched: false };
+  const el = $('#cpv');
+  if (!want) el.innerHTML = `<div class="cpv-empty">${R.sel.length ? '点左侧任一已选词，在这里看它的演示' : '选词后，在这里看演示'}</div>`;
+  else if (cpv.combo) cpv.ctl = LEX.mount('sc-' + want.slice(3), el, { hasAB: true, abPeriod: 10, autoAB: true, mode: 1, onMode: (m, auto) => { cpv.st.mode = m; if (!auto) cpv.st.touched = true; if (auto && cpv.ctl) cpv.ctl.restart(); cpv.key = null; paintPvHead(); } });
+  else { const k = BY[want]; cpv.ctl = LEX.mount(k.id, el, { hasAB: !!k.ab, autoAB: true, mode: 1, params: Object.fromEntries((k.controls || []).map(c => [c.name, c.value])), onMode: (m, auto) => { cpv.st.mode = m; if (!auto) cpv.st.touched = true; paintPvHead(); } }); }
+  paintPvHead();
+}
+function paintPvHead() {
+  const cur = cpv.cur, title = $('#cpvTitle'), tools = $('#cpvTools'), ctr = $('#cpvCtrls'), now = $('#cpvNow');
+  $$('#compSel .schip').forEach(c => c.classList.toggle('on', c.dataset.sid === cur));
+  if (!cur) { title.textContent = '预览'; tools.innerHTML = ''; ctr.innerHTML = ''; now.hidden = true; return; }
+  const m = cpv.st.mode, play = LEX.reduced ? `<button type="button" class="btn sm" data-cpvplay aria-pressed="${!!(cpv.ctl && cpv.ctl.playing)}">${cpv.ctl && cpv.ctl.playing ? '❚❚ 暂停' : '▶ 播放'}</button>` : '';
+  if (cpv.combo) {
+    const s = SBY[cur.slice(3)];
+    const bk = baseKeys(), mod = R.sel.some(id => !bk.includes(id)) || bk.some(id => !R.sel.includes(id));
+    title.innerHTML = `${esc(s.zh)}<em> · ${mod ? '原配方的 ' : ''}10 秒组合演示</em>`; tools.innerHTML = '';
+    ctr.innerHTML = `<div class="ctrls"><div class="seg ab" role="group" aria-label="对照：A 只写内容 / B 加上这组词"><button type="button" data-cpvab="0" aria-pressed="${m === 0}"><i>A</i>只写内容</button><button type="button" data-cpvab="1" aria-pressed="${m === 1}"><i>B</i>加上这组词</button></div>${play}</div>`;
+    now.hidden = false; if (!m) paintPvLive([]);
+  } else {
+    const k = BY[cur], back = R.base && SBY[R.base] && LEX.has('sc-' + R.base);
+    title.innerHTML = `${esc(k.zh)}<em> · 单词演示</em>`;
+    tools.innerHTML = `<button type="button" class="btn sm" data-open="${k.id}">详情</button>${back ? '<button type="button" class="btn sm" data-cpvback>回到组合演示</button>' : ''}`;
+    ctr.innerHTML = k.ab || play ? `<div class="ctrls">${k.ab ? `<div class="seg ab" role="group" aria-label="对照：A 不加这个词 / B 加上">${k.ab.map((l, i) => `<button type="button" data-cpvab="${i}" aria-pressed="${m === i}" title="${esc(l)}"><i>${i ? 'B' : 'A'}</i>${esc(l)}</button>`).join('')}</div>` : ''}${play}</div>` : '';
+    now.hidden = true;
+  }
+}
+function paintPvLive(ids) {
+  const set = new Set(ids), now = $('#cpvNow'), m = cpv.st.mode;
+  $$('#compSel .schip').forEach(c => c.classList.toggle('live', set.has(c.dataset.sid)));
+  now.classList.toggle('a', !m); now.querySelector('b').textContent = m ? 'NOW' : 'A';
+  now.querySelector('span').textContent = m ? ids.map(id => BY[id].zh).join(' · ') : A_NOTE;
+}
+function renderComposer() {
+  const sel = sortedSel();
+  $('#selN').textContent = `${sel.length} 个`;
+  $$('#kindSeg [data-kind]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.kind === R.kind)));
+  $('#kindCap').textContent = R.kind === 'video' ? '按时间播放，最后导出成片' : R.kind === 'web' ? '由滚动、指针和状态驱动' : '载入场景配方时会自动选好';
+  $('#prov').innerHTML = provHTML();
+  $('#compSel').innerHTML = LAY.map(L => {
+    const ks = sel.filter(k => k.layer === L.id);
+    return `<div class="cs-l"><h4>${lc(L.id)}${esc(L.zh)}<span class="n">${ks.length}</span></h4>${ks.length ? `<div class="chips">${ks.map(k => `<span class="schip" data-sid="${k.id}"><button type="button" data-pv="${k.id}" title="看这个词的演示">${esc(k.zh)}</button><button type="button" class="x" data-remove="${k.id}" aria-label="移除 ${esc(k.zh)}">×</button></span>`).join('')}</div>` : `<span class="none">${L.id === 'L4' && R.kind === 'video' ? '未选（视频可以不选）' : '未选'}</span>`}</div>`;
+  }).join('');
+  $('#hints').innerHTML = checkHTML();
+  cpv.key = null; renderPv();
+  renderOut();
+}
+function renderAddList() {
+  const q = $('#addQ').value.trim().toLowerCase();
+  $('#addList').innerHTML = LAY.map(L => {
+    const ks = KW.filter(k => k.layer === L.id && (!q || [k.id, k.zh, k.en, k.group, k.what].join(' ').toLowerCase().includes(q)));
+    return ks.length ? `<h5>${lc(L.id)}${esc(L.zh)} · ${esc(L.en)}</h5>` + ks.map(k => `<div class="arow"><button type="button" class="z" data-pv="${k.id}" title="看这个词的演示">${esc(k.zh)}<small>${esc(k.group)}</small></button><button type="button" class="mk" data-add="${k.id}" aria-pressed="${inRecipe(k.id)}" aria-label="加入或移除：${esc(k.zh)}"></button></div>`).join('') : '';
+  }).join('') || '<p style="padding:12px;color:var(--muted);font-size:13px">没有匹配的词</p>';
+}
+$('#addQ').addEventListener('input', renderAddList);
+const subj = $('#subject'); subj.value = R.text || '';
+let sT = 0; subj.addEventListener('input', () => { R.text = subj.value; renderOut(); clearTimeout(sT); sT = setTimeout(saveR, 300); });
+$('#copyOut').addEventListener('click', () => copy(buildPrompt(), $('#out'), '已复制提示词'));
+$('#clearSel').addEventListener('click', () => { R.sel = []; R.base = null; undoSnap = null; pvPick = null; saveR(); onRecipeChange(false); });
+
+/* ── method (last section): rewrites open in place, nothing jumps ── */
+const rwHTML = (r, i) => `<div class="rw" data-rw="${i}"><button type="button" class="rw-q" aria-expanded="false" aria-controls="rw-${i}"><span class="v">${esc(r.vague)}</span><span class="arr"><span>改写</span></span></button><div class="rw-a" id="rw-${i}" hidden><p class="en">${esc(r.precise)}</p><p class="zh">中文写法：${esc(zhOf(r))}</p><div class="chips">${r.keys.map(kchip).join('')}</div><div class="rw-act"><button type="button" class="btn sm primary" data-addset="rw:${i}">全部加入配方器</button></div></div></div>`;
+$('#rws').innerHTML = [0, 1].map(c => `<div class="rw-col">${RW.map((r, i) => (i % 2 === c ? rwHTML(r, i) : '')).join('')}</div>`).join('');
+$('#formula').innerHTML = FORM.map((f, i) => `<li style="--lc:var(--${f.layer})"><span class="fn">${String(i + 1).padStart(2, '0')}${lc(f.layer)}</span><b>${esc(f.part)}</b><p>${esc(f.q)}</p></li>`).join('');
+function setRw(btn, open) { btn.setAttribute('aria-expanded', String(open)); document.getElementById(btn.getAttribute('aria-controls')).hidden = !open; }
+$('#rws').addEventListener('click', e => { const b = e.target.closest('.rw-q'); if (b) setRw(b, b.getAttribute('aria-expanded') !== 'true'); });
+$('#rwAll').addEventListener('click', e => { const open = $$('.rw-q').some(b => b.getAttribute('aria-expanded') !== 'true'); $$('.rw-q').forEach(b => setRw(b, open)); e.currentTarget.textContent = open ? '全部收起' : '全部展开'; });
+
+/* ── hero: four-panel flow stage. Its own LEX instance (not in live / scLive / cpv); the timeline clock IS the film's clock,
+      so scrolling away, a hidden tab or LEX.pauseAll() freeze the whole stage for free. ── */
+const HT = [0, 3, 6.5, 9.5, 19.5];   // stage starts ①②③④ and loop end (s); ①–③ play the film in A, ④ plays B for its full 10 s
+const HERO = { sc: SBY.launch ? 'launch' : SC[0].id, ctl: null, phase: 0, paused: false, manual: false, show: [], last: {}, inView: true, liveAt: 0 };
+$('#fsSel').innerHTML = [['video', '视频'], ['web', '网页']].map(([kd, zh]) => `<optgroup label="${zh}">${SC.filter(x => x.kind === kd && LEX.has('sc-' + x.id)).map(x => `<option value="${x.id}">${esc(x.zh)}</option>`).join('')}</optgroup>`).join('');
+function heroBuild() {
+  const sc = SBY[HERO.sc], web = sc.kind === 'web';
+  HERO.show = (sc.show || sc.keys.slice(0, 4)).filter(id => BY[id]);
+  $('#fsSel').value = sc.id;
+  $('#fsWords').innerHTML = HERO.show.map(id => `<span class="fw" data-w="${id}">${lc(BY[id].layer)}${esc(BY[id].zh)}</span>`).join('');
+  const lines = promptFor(HERO.show, sc.kind, '', false).split('\n').filter(Boolean); lines[0] = '[你的一句话主题]';
+  $('#fsPrompt').innerHTML = lines.map(l => `<span class="fl${/^<\/?[a-z]+>$/.test(l) ? ' tg' : l[0] === '[' ? ' ph' : ''}">${esc(l)}</span>`).join('');
+  $('#fsBoardT').textContent = web ? '核对方案' : '核对分镜';
+  $('#fsBoard').innerHTML = (web ? ['首屏', '第 2 屏', '滚动高光', '收尾'] : ['0:00', '0:03', '0:06', '0:09']).map((c, i) => `<div class="ff"><div class="fr f${i}"><i></i></div><span>${c}</span></div>`).join('');
+  $('#fsLoad').dataset.load = sc.id;
+  if (HERO.ctl) { try { HERO.ctl.destroy(); } catch (e) { /* ignore */ } }
+  HERO.ctl = LEX.mount('sc-' + sc.id, $('#fsFilm'), { hasAB: false, autoAB: false, mode: 1 });
+  HERO.phase = 0; HERO.manual = false; HERO.paused = false; HERO.last = {};
+  if (LEX.reduced && HERO.ctl) { HERO.manual = true; HERO.paused = true; HERO.phase = 1; HERO.ctl.setMode(1); HERO.ctl.seek(6.4); }
+  heroRender();
+}
+function heroT() { const c = HERO.ctl; if (!c || HERO.manual) return HT[4]; return HERO.phase ? HT[3] + Math.min(c.t, 10) : Math.min(c.t, HT[3]); }
+function heroRender(now) {
+  const c = HERO.ctl, L = HERO.last, man = HERO.manual, T = heroT();
+  const st = T < HT[1] ? 1 : T < HT[2] ? 2 : T < HT[3] ? 3 : 4;
+  const cnt = (t0, step, max) => Math.max(0, Math.min(max, Math.floor((T - t0) / step) + 1));
+  const nW = st > 1 ? 4 : cnt(.25, .6, 4), nL = st < 2 ? 0 : st > 2 ? 99 : cnt(HT[1], .3, 99), nF = st < 3 ? 0 : st > 3 ? 4 : cnt(HT[2], .45, 4), nK = st < 3 ? 0 : st > 3 ? 4 : cnt(HT[2] + 1.1, .45, 4);
+  if (L.st !== st || L.man !== man) {
+    $$('#fs .fs-p').forEach(el => { const i = +el.dataset.fs; el.classList.toggle('on', !man && i === st); el.classList.toggle('done', man || i < st); el.classList.toggle('show', i === (st === 4 ? 1 : st)); });
+    L.st = st; L.man = man; if (HERO.inView) setRail(man ? [] : [st], '', false);
+  }
+  if (L.nW !== nW) { $$('#fsWords .fw').forEach((el, i) => el.classList.toggle('in', i < nW)); L.nW = nW; }
+  if (L.nL !== nL) { $$('#fsPrompt .fl').forEach((el, i) => el.classList.toggle('in', i < nL)); L.nL = nL; }
+  if (L.nF !== nF || L.nK !== nK) { $$('#fsBoard .ff').forEach((el, i) => { el.classList.toggle('in', i < nF); el.classList.toggle('ok', i < nK); }); L.nF = nF; L.nK = nK; }
+  const m = c ? c.mode : 0, pl = !!(c && c.playing);
+  if (L.m !== m) { $$('#fs [data-heroab]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.heroab === m))); L.m = m; }
+  if (L.pl !== pl) { const b = $('#fsPP'); b.textContent = pl ? '❚❚' : '▶'; b.setAttribute('aria-label', pl ? '暂停' : '播放'); L.pl = pl; }
+  $('#fsBar').style.transform = `scaleX(${(T / HT[4]).toFixed(4)})`;
+  if (c && (!now || now - HERO.liveAt > 160)) {
+    HERO.liveAt = now || 0;
+    const ids = m && (st === 4 || man) ? c.active() : [], key = ids.join(',');
+    if (L.live !== key) { L.live = key; const set = new Set(ids); $$('#fsWords .fw').forEach(el => el.classList.toggle('live', set.has(el.dataset.w))); }
+  }
+}
+function heroTick(now) {
+  const c = HERO.ctl; if (!c) return;
+  if (!HERO.manual && c.playing) {
+    if (!HERO.phase && c.t >= HT[3]) { HERO.phase = 1; c.setMode(1); c.restart(); }
+    else if (HERO.phase && c.t >= 10) { HERO.phase = 0; c.setMode(1); c.restart(); }
+  }
+  heroRender(now);
+}
+function heroGo(st) {   // ①–③: show that panel finished and hold; ④: play the film from its start
+  const c = HERO.ctl; if (!c) return; HERO.manual = false;
+  if (st >= 4) { HERO.phase = 1; c.setMode(1); c.restart(); c.play(); HERO.paused = false; }
+  else { HERO.phase = 0; c.setMode(1); c.seek(HT[st] - .02); c.pause(); HERO.paused = true; }
+  heroRender();
+}
+function heroPlay() {
+  const c = HERO.ctl; if (!c) return;
+  if (HERO.manual) { HERO.manual = false; HERO.phase = 0; c.setMode(1); c.restart(); c.play(); HERO.paused = false; }
+  else if (c.playing) { c.pause(); HERO.paused = true; }
+  else { c.play(); HERO.paused = false; }
+  heroRender();
+}
+function heroAB(m) {   // manual A/B: leave the timeline, keep looping the chosen version
+  const c = HERO.ctl; if (!c) return; HERO.manual = true; HERO.phase = m; c.setMode(m); c.restart();
+  if (LEX.reduced && !c.playing) c.seek(m ? 6.4 : 1.5); else { c.play(); HERO.paused = false; }
+  heroRender();
+}
+$('#fsSel').addEventListener('change', e => { if (SBY[e.target.value]) { HERO.sc = e.target.value; heroBuild(); } });
+
+/* ── nav rail: follows the hero timeline while the hero is in view; otherwise shows where you are ── */
+const railLis = $$('#rail li'), railSubs = $$('#rail .sub a'); let railKey = '';
+function setRail(sts, sec, help) {
+  const key = sts.join('') + '|' + sec + '|' + (help ? 1 : 0); if (key === railKey) return; railKey = key;
+  railLis.forEach(li => { const on = sts.includes(+li.dataset.st), a = li.querySelector('a'); li.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current'); });
+  railSubs.forEach(a => a.classList.toggle('on', a.dataset.sec === sec));
+  $('#navHelp').classList.toggle('on', !!help);
+}
+const spy = raf1(() => {
+  const y = navBottom() + 24, top = id => document.getElementById(id).getBoundingClientRect().top;
+  const fr = $('#fs').getBoundingClientRect();
+  HERO.inView = top('paths') > y && fr.top < innerHeight * .6 && fr.bottom > y;
+  if (HERO.inView) { setRail(HERO.manual ? [] : [HERO.last.st || 1], '', false); return; }
+  if (top('paths') > y) { setRail([], '', false); return; }
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4 || top('method') <= y) { setRail([], '', true); return; }
+  if (top('composer') <= y) { const af = $('#after').getBoundingClientRect(); setRail(af.top < innerHeight * .6 && af.bottom > y ? [3, 4] : [2], '', false); return; }
+  setRail([1], top('recipes') <= y ? 'recipes' : top('library') <= y ? 'library' : top('anatomy') <= y ? 'anatomy' : '', false);
+});
+addEventListener('scroll', spy, { passive: true }); addEventListener('resize', spy);
+
+/* ── landing film (first screen): the launch combo in B, with its words lighting up ── */
+const LH = { ctl: LEX.has('sc-launch') ? LEX.mount('sc-launch', $('#lhFilm'), { hasAB: false, autoAB: false, mode: 1 }) : null, key: null, at: 0 };
+if (LH.ctl && LEX.reduced) LH.ctl.seek(6.4);
+$('#lhNow').innerHTML = '<b>NOW</b>' + ((SBY.launch && SBY.launch.show) || []).map(id => `<span data-w="${id}">${esc(BY[id].zh)}</span>`).join('');
+function lhTick(now) { if (!LH.ctl || now - LH.at < 160) return; LH.at = now; const ids = LH.ctl.active(), key = ids.join(','); if (key === LH.key) return; LH.key = key; const set = new Set(ids); $$('#lhNow span').forEach(el => el.classList.toggle('live', set.has(el.dataset.w))); }
+
+/* ── paths: three small live previews (display only; the whole card is the link) ── */
+(() => {
+  SCENE.mount($('#pthA')).set(cum[3]);
+  if (LEX.has('one-accent')) LEX.mount('one-accent', $('#pthB'), { hasAB: true, autoAB: true, mode: 1 });
+  const id = LEX.has('sc-luxury') ? 'sc-luxury' : 'sc-' + SC[SC.length - 1].id;
+  const c = LEX.mount(id, $('#pthC'), { hasAB: false, autoAB: false, mode: 1 }); if (c && LEX.reduced) c.seek(5.6);
+})();
+
+/* ── tray: always shows where picked words go ─────────────── */
+const tray = $('#tray'); let compVisible = false;
+function updateTray(bump) {
+  const n = R.sel.length; $('#trayN').textContent = n; $('#navN').textContent = n ? String(n) : '';
+  $('#trayBar').innerHTML = LAY.map(L => `<i class="${R.sel.some(id => BY[id].layer === L.id) ? 'on' : ''}" style="--lc:var(--${L.id})"></i>`).join('');
+  const hide = !n || compVisible; tray.classList.toggle('hide', hide); tray.inert = hide; document.body.classList.toggle('has-tray', !hide);
+  if (bump && !hide && !reduced) { tray.classList.remove('bump'); void tray.offsetWidth; tray.classList.add('bump'); }
+}
+new IntersectionObserver(es => { es.forEach(e => { compVisible = e.isIntersecting; }); updateTray(false); }, { rootMargin: '-30% 0px -30% 0px' }).observe($('#composer'));
+
+/* ── global delegation ────────────────────────────────────── */
+const SEL = '[data-open],[data-add],[data-remove],[data-copy],[data-ltab],[data-nextlayer],[data-load],[data-loadset],[data-nav],[data-ab],[data-play],[data-lang],[data-scab],[data-scplay],[data-herogo],[data-heroab],[data-heroplay],[data-tag],#moreTags,[data-setfilter],[data-addset],[data-clearset],[data-goto],[data-pv],[data-cpvab],[data-cpvplay],[data-cpvback],[data-kind],[data-undo],[data-restore],[data-gocomp],#clearF';
+document.addEventListener('click', e => {
+  const t = e.target.closest(SEL);
+  if (!t) return;
+  const ds = t.dataset;
+  if (ds.open) { openDetail(ds.open, t); }
+  else if (ds.add) { const on = toggleRecipe(ds.add); if (!t.closest('#composer')) toast((on ? '已加入配方器：' : '已从配方器移除：') + BY[ds.add].zh + `（共 ${R.sel.length} 词）`); }
+  else if (ds.remove) { toggleRecipe(ds.remove, false); }
+  else if (ds.copy) { const [kind, id] = ds.copy.split(':'), k = BY[id]; if (!k) return; const holder = t.closest('.en,.phr'); copy(kind === 'zh' ? k.zh_phrase : k.en, holder && holder.querySelector('.copy-src'), kind === 'zh' ? '已复制中文写法' : '已复制英文写法'); }
+  else if (ds.ltab) { setFilter({ layer: ds.ltab }, false); }
+  else if (ds.nextlayer) { setFilter({ layer: ds.nextlayer }, true); }
+  else if (ds.load) { if (dlg.open) dlg.close(); loadScenario(ds.load); }
+  else if (ds.loadset === 'anatomy') { loadSet(AN_KEYS, 'anatomy', 'video', '滚动解剖示例的 ' + AN_KEYS.length + ' 个词'); }
+  else if (ds.nav) { navDetail(+ds.nav); }
+  else if (ds.tag) { const on = F.tag !== ds.tag; setFilter(on ? { tag: ds.tag, layer: 'all' } : { tag: null }, false); }
+  else if (t.id === 'moreTags') { F.more = !F.more; renderTags(); }
+  else if (ds.herogo) { heroGo(+ds.herogo); }
+  else if (ds.heroab != null) { heroAB(+ds.heroab); }
+  else if (ds.heroplay != null) { heroPlay(); }
+  else if (ds.setfilter) { showSet(ds.setfilter); }
+  else if (ds.addset) { const ids = setIds(ds.addset) || [], n = addMany(ids); toast(n ? `已加入配方器：${n} 个词（共 ${R.sel.length} 词）` : '这些词都已在配方器里'); }
+  else if ('clearset' in ds) { setFilter({ set: '' }, false); }
+  else if (ds.goto) { e.preventDefault(); if (dlg.open) { dAfter = () => gotoEl(ds.goto); dlg.close(); } else gotoEl(ds.goto); }
+  else if (ds.pv) { pvPick = ds.pv; renderPv(); if (phoneMQ.matches) { const b = $('.cpv').getBoundingClientRect(); if (b.top < navBottom() || b.bottom > innerHeight) $('.cpv').scrollIntoView({ behavior: smooth(), block: 'center' }); } }
+  else if (ds.cpvab != null) { if (!cpv.ctl) return; const m = +ds.cpvab; cpv.st.mode = m; cpv.st.touched = true; cpv.ctl.setMode(m); if (cpv.combo) cpv.ctl.restart(); cpv.key = null; paintPvHead(); }
+  else if (ds.cpvplay != null) { if (!cpv.ctl) return; if (cpv.ctl.playing) cpv.ctl.pause(); else cpv.ctl.play(); paintPvHead(); }
+  else if (ds.cpvback != null) { pvPick = null; renderPv(); }
+  else if (ds.kind) { R.kind = R.kind === ds.kind ? '' : ds.kind; saveR(); renderComposer(); $$('[data-add]').forEach(syncAddBtn); }
+  else if (ds.undo != null) { undoLoad(); }
+  else if (ds.restore != null) { restoreBase(); }
+  else if (ds.gocomp != null) { goComposer(false); }
+  else if (ds.scab != null) { const card = t.closest('.recipe'), el = card.querySelector('.demo[data-sc]'), st = scState(el.dataset.sc), m = +ds.scab, ctl = scLive.get(el); st.touched = true; st.mode = m; el.__scKey = null; if (ctl) { ctl.setMode(m); ctl.restart(); } scSync(card, m, false, st); }
+  else if (ds.scplay != null) { const el = t.closest('.recipe').querySelector('.demo[data-sc]'), ctl = scLive.get(el); if (!ctl) return; if (ctl.playing) { ctl.pause(); t.textContent = '▶ 播放'; t.setAttribute('aria-pressed', 'false'); } else { ctl.play(); t.textContent = '❚❚ 暂停'; t.setAttribute('aria-pressed', 'true'); } }
+  else if (ds.ab != null) { const id = idFor(t); if (!id) return; const s = stateFor(BY[id]), m = +ds.ab, ctl = ctlFor(t); s.touched = true; s.mode = m; if (ctl) ctl.setMode(m); syncAB(t.closest('.card') || dlg, m, false, s); }
+  else if (ds.play != null) { const ctl = ctlFor(t); if (!ctl) return; if (ctl.playing) { ctl.pause(); t.textContent = '▶ 播放'; t.setAttribute('aria-pressed', 'false'); } else { ctl.play(); t.textContent = '❚❚ 暂停'; t.setAttribute('aria-pressed', 'true'); } }
+  else if (ds.lang) { R.lang = ds.lang === 'zh' ? 'zh' : 'en'; saveR(); renderOut(); }
+  else if (t.id === 'clearF') { $('#q').value = ''; setFilter({ q: '', set: '', adv: false, tag: null }, false); }
+});
+
+/* ── init ─────────────────────────────────────────────────── */
+renderLibrary(); renderAddList(); renderComposer(); syncAddset(); updateTray(false); heroBuild(); anatScroll(); spy(); fromHash();
+(function heroLoop(now) { heroTick(now); lhTick(now); requestAnimationFrame(heroLoop); })(0);
+})();
+</script>

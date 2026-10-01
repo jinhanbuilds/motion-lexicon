@@ -4,6 +4,8 @@
 
 75 个动效关键词，每个都有实时演示；10 套场景配方，把词组合成可观察的效果。选好词，填入你的内容，再用配方器组装中英文提示词，交给 Claude 或其他支持代码动效的 AI 工具制作。
 
+**[在线打开动效词典（飞书妙搭，无需登录）](https://zcnofdpgpxud.feishuapp.com/app/app_17f0q2gtu5x/)**
+
 ## 视频预览
 
 ### 完整介绍 · 76 秒
@@ -24,7 +26,7 @@ https://github.com/user-attachments/assets/5809f1a7-8406-4f80-a070-2149b7f689d9
 
 ## 怎么用
 
-1. **打开词典：**点击 [下载完整 ZIP](https://github.com/jinhanbuilds/motion-lexicon/archive/refs/heads/main.zip)，解压后用 Chrome 打开根目录的 `index.html`。
+1. **打开词典：**直接 [在线打开（飞书妙搭，无需登录）](https://zcnofdpgpxud.feishuapp.com/app/app_17f0q2gtu5x/)；需要本地运行时，下载 [完整 ZIP](https://github.com/jinhanbuilds/motion-lexicon/archive/refs/heads/main.zip)，解压后用 Chrome 打开根目录的 `index.html`。
 2. **挑一条路：**第一次来可看「滚动解剖」；想自己挑词就进「分层词库」；想快速开始就选「场景配方」。三条路都通向同一个配方器。
 3. **填真实内容：**选择视频或网页，写清要介绍的产品、要解释的知识、已有素材和限制；按需要增删预设词。
 4. **复制提示词：**选择 EN 或中文，交给 AI。先检查它给出的分镜或页面方案，再让它写代码，最后实际播放、检查和导出。

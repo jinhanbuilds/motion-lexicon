@@ -7,7 +7,7 @@ import sys
 from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parent.parent
-TOP_FILES = {"README.md", "CREDITS.md", ".gitignore", "index.html", "prompts.md"}
+TOP_FILES = {"README.md", "CREDITS.md", "RIGHTS.md", ".gitignore", "index.html", "prompts.md"}
 TOP_DIRS = {"src", "scripts", "gallery", "docs"}
 SKIP = {".DS_Store", "__pycache__", "node_modules"}
 

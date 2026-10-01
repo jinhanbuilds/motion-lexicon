@@ -1,18 +1,14 @@
-# 视频与封面位置
+# 项目视频
 
-主 README 的「视频预览」位于项目介绍之后、静态截图之前。先用当前页面截图介绍项目，录屏完成后在 `VIDEO_PREVIEW_START` 与 `VIDEO_PREVIEW_END` 之间放视频链接。
+两段视频已上传为 GitHub 附件，在[主 README](../../README.md#视频预览)中直接播放。
 
-建议录制 45–60 秒：首屏与流程舞台 → 词条 A/B 对比 → 载入一套场景配方 → 填入主题 → 复制提示词。
+| 视频 | 时长 | 在线观看 |
+| --- | --- | --- |
+| 完整介绍 | 76 秒 | [打开视频](https://github.com/user-attachments/assets/816429ee-01e4-4850-bee6-7c849bb97648) |
+| 快速预览 | 60 秒 | [打开视频](https://github.com/user-attachments/assets/5809f1a7-8406-4f80-a070-2149b7f689d9) |
 
-## 文件约定
+两段均保留用户提供的原视频：1920 × 1080、60fps、H.264 视频与 AAC 配乐，上传时没有重新编码。
 
-| 文件 | 用途 |
-| --- | --- |
-| `preview.mp4` | 项目介绍或操作录屏，建议 MP4 / H.264 |
-| `poster.jpg` | 视频封面 |
+视频通过 GitHub 附件保存；仓库和源码 ZIP 包含页面、源码与使用文档。需要离线携带视频时，可另行下载视频原文件。
 
-以上文件名为预留约定，当前尚未加入视频或封面。
-
-GitHub README 可参照之前图鉴的做法：在 GitHub 编辑界面上传录屏，把生成的 `https://github.com/user-attachments/assets/...` 链接单独放在「视频预览」下。上传完后用未登录页面检查能否播放。
-
-需要把视频随本地资料包一起交付时，把文件放在本目录，再运行 `python3 scripts/package.py`。大视频可以作为 GitHub Release 附件保存，README 链接到附件。
+后续替换视频时，先上传新文件，再更新主 README 与本页的对应链接。README 中每个视频链接单独成段，便于显示为播放器。

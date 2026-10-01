@@ -87,7 +87,7 @@ def main():
     for placeholder, value in replacements.items():
         assert page.count(placeholder) == 1, f"Expected one placeholder: {placeholder}"
         page = page.replace(placeholder, value, 1)
-    (ROOT / "index.html").write_text(standalone(page, "Opus 5.5 动效词典", "75 个实时动效词、10 套场景配方，选词与内容组装成中英文提示词。"), encoding="utf-8")
+    (ROOT / "index.html").write_text(standalone(page, "动效词典", "75 个实时动效词、10 套场景配方，选词与内容组装成中英文提示词。"), encoding="utf-8")
     gallery = (GALLERY / "index.html").read_text(encoding="utf-8")
     assert gallery.count("__CATALOG__") == 1
     gallery = gallery.replace("__CATALOG__", inline_json(catalog))
